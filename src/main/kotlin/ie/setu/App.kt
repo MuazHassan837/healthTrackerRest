@@ -1,4 +1,8 @@
 package ie.setu
+import ie.setu.config.DbConfig
+import ie.setu.config.JavalinConfig
 
-class App {
+fun main() {
+    DbConfig().getDbConnection()
+    JavalinConfig().startJavalinService()
 }
