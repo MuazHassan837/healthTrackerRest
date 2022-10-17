@@ -49,7 +49,7 @@
         <!-- Adding Javalin dependency -->
         <dependency>
             <groupId>io.javalin</groupId>
-            <artifactId>javalin</artifactId>
+            <artifactId>javalin-bundle</artifactId>
             <version>4.6.1</version>
         </dependency>
         <!-- These Logging Dependencies are required; warning appears otherwise when running -->
