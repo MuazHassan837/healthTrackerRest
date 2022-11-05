@@ -4,9 +4,11 @@ import ie.setu.domain.ErrorResponse
 
 import cc.vileda.openapi.dsl.info
 import cc.vileda.openapi.dsl.openapiDsl
+import ie.setu.utils.jsonObjectMapper
 
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.*
+import io.javalin.plugin.json.JavalinJackson
 import io.javalin.plugin.openapi.OpenApiOptions
 import io.javalin.plugin.openapi.OpenApiPlugin
 import io.javalin.plugin.openapi.ui.ReDocOptions
@@ -18,6 +20,8 @@ class JavalinConfig {
         val app = Javalin.create {
             it.registerPlugin(getConfiguredOpenApiPlugin())
             it.defaultContentType = "application/json"
+            it.jsonMapper(JavalinJackson(jsonObjectMapper()))
+            it.enableWebjars()
         }.apply {
             exception(Exception::class.java) { e, _ -> e.printStackTrace() }
             error(404) { ctx -> ctx.json("404 - Not Found") }
@@ -43,6 +47,7 @@ class JavalinConfig {
                     patch(HealthTrackerController::updateUser)
                     path("activities"){
                         get(HealthTrackerController::getActivitiesByUserId)
+                        delete(HealthTrackerController::deleteAllActByUserId)
                     }
                 }
                 path("/email/{email}"){
@@ -50,6 +55,11 @@ class JavalinConfig {
                 }
             }
             path("/api/activities") {
+                path("/{act-id}"){
+                    delete(HealthTrackerController::deleteActByID)
+                    patch(HealthTrackerController::updateActivityByActID)
+                    get(HealthTrackerController::getActByActID)
+                }
                 get(HealthTrackerController::getAllActivities)
                 post(HealthTrackerController::addActivity)
             }

@@ -3,8 +3,7 @@ package ie.setu.repository
 import ie.setu.domain.User
 import ie.setu.domain.db.Users
 import ie.setu.domain.repository.UserDAO
-import ie.setu.helpers.nonExistingEmail
-import ie.setu.helpers.users
+import ie.setu.helpers.*
 import junit.framework.TestCase
 import junit.framework.TestCase.assertEquals
 import org.jetbrains.exposed.sql.Database
@@ -22,25 +21,6 @@ val user4 = users.get(3)
 
 class UserDAOTest {
 
-    internal fun populateThreeUserTable(): UserDAO{
-        SchemaUtils.create(Users)
-        val userDAO = UserDAO()
-        userDAO.save(user1)
-        userDAO.save(user2)
-        userDAO.save(user3)
-        return userDAO
-    }
-
-    internal fun populateFourUserTable(): UserDAO{
-        SchemaUtils.create(Users)
-        val userDAO = UserDAO()
-        userDAO.save(user1)
-        userDAO.save(user2)
-        userDAO.save(user3)
-        userDAO.save(user4)
-
-        return userDAO
-    }
     companion object {
 
         //Make a connection to a local, in memory H2 database.

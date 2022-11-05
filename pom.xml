@@ -24,6 +24,12 @@
             <artifactId>exposed</artifactId>
             <version>0.17.14</version>
         </dependency>
+        <dependency>
+            <groupId>com.konghq</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>3.13.11</version>
+            <classifier>standalone</classifier>
+        </dependency>
         <!-- postgres driver -->
         <dependency>
             <groupId>org.postgresql</groupId>
