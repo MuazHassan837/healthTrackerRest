@@ -1,8 +1,6 @@
 package ie.setu.utils
-import ie.setu.domain.Activity
-import ie.setu.domain.db.Activities
-import ie.setu.domain.User
-import ie.setu.domain.db.Users
+import ie.setu.domain.*
+import ie.setu.domain.db.*
 import org.jetbrains.exposed.sql.ResultRow
 
 fun mapToUser(it: ResultRow) = User(
@@ -18,4 +16,25 @@ fun mapToActivity(it: ResultRow) = Activity(
     started = it[Activities.started],
     calories = it[Activities.calories],
     userId = it[Activities.userId]
+)
+
+fun mapToInTake(it: ResultRow) = InTake (
+    id = it[InTakes.id],
+    amountltr = it[InTakes.amountltr],
+    substance = it[InTakes.substance],
+    userId = it[InTakes.userId]
+    )
+
+fun mapToFitness(it: ResultRow) = Fitness (
+    id = it[Finesse.id],
+    dayType = it[Finesse.dayType],
+    started = it[Finesse.started],
+    userId = it[Finesse.userId]
+)
+
+
+fun mapToMood(it: ResultRow) = Mood (
+    id = it[Moods.id],
+    mood = it[Moods.mood],
+    userId = it[Moods.userId]
 )

@@ -6,3 +6,5 @@ object Users : Table("users") {
     val name = varchar("name", 100)
     val email = varchar("email", 255)
 }
+
+

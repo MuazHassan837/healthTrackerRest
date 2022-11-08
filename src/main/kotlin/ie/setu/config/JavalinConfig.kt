@@ -1,9 +1,9 @@
 package ie.setu.config
-import ie.setu.controllers.HealthTrackerController
 import ie.setu.domain.ErrorResponse
 
 import cc.vileda.openapi.dsl.info
 import cc.vileda.openapi.dsl.openapiDsl
+import ie.setu.controllers.*
 import ie.setu.utils.jsonObjectMapper
 
 import io.javalin.Javalin
@@ -39,29 +39,68 @@ class JavalinConfig {
     private fun registerRoutes(app: Javalin) {
         app.routes {
             path("/api/users") {
-                get(HealthTrackerController::getAllUsers)
-                post(HealthTrackerController::addUser)
+                get(UserController::getAllUsers)
+                post(UserController::addUser)
                 path("{user-id}"){
-                    get(HealthTrackerController::getUserByUserId)
-                    delete(HealthTrackerController::deleteUser)
-                    patch(HealthTrackerController::updateUser)
+                    get(UserController::getUserByUserId)
+                    delete(UserController::deleteUser)
+                    patch(UserController::updateUser)
                     path("activities"){
-                        get(HealthTrackerController::getActivitiesByUserId)
-                        delete(HealthTrackerController::deleteAllActByUserId)
+                        get(ActivityController::getActivitiesByUserId)
+                        delete(ActivityController::deleteAllActByUserId)
+                    }
+                    path("intakes"){
+                        get(HydrationController::getInTakeByUserId)
+                        delete(HydrationController::delAllInTakeByUserId)
+                    }
+                    path("fitness"){
+                        get(FitnessController::getFitnessByUserId)
+                        delete(FitnessController::deleteAllFitByUserId)
+                    }
+                    path("moods"){
+                        get(MoodController::getMoodByUserId)
+                        delete(MoodController::deleteAllMoodByUserId)
                     }
                 }
                 path("/email/{email}"){
-                    get(HealthTrackerController::getUserByEmail)
+                    get(UserController::getUserByEmail)
                 }
             }
             path("/api/activities") {
                 path("/{act-id}"){
-                    delete(HealthTrackerController::deleteActByID)
-                    patch(HealthTrackerController::updateActivityByActID)
-                    get(HealthTrackerController::getActByActID)
+                    delete(ActivityController::deleteActByID)
+                    patch(ActivityController::updateActivityByActID)
+                    get(ActivityController::getActByActID)
                 }
-                get(HealthTrackerController::getAllActivities)
-                post(HealthTrackerController::addActivity)
+                get(ActivityController::getAllActivities)
+                post(ActivityController::addActivity)
+            }
+            path("/api/intakes") {
+                path("/{hydra-id}"){
+                    delete(HydrationController::delIntakeByID)
+                    patch(HydrationController::updateInTakeByID)
+                    get(HydrationController::getIntakeByID)
+                }
+                get(HydrationController::getAllInTakes)
+                post(HydrationController::addInTake)
+            }
+            path("/api/fitness") {
+                path("/{fit-id}"){
+                    delete(FitnessController::deleteFitByID)
+                    patch(FitnessController::updateFitnessByID)
+                    get(FitnessController::getFitByID)
+                }
+                get(FitnessController::getAllFitnessDetails)
+                post(FitnessController::addFitness)
+            }
+            path("/api/moods") {
+                path("/{mood-id}"){
+                    delete(MoodController::deleteMoodByID)
+                    patch(MoodController::updateMoodByID)
+                    get(MoodController::getMoodByID)
+                }
+                get(MoodController::getAllMoods)
+                post(MoodController::addMood)
             }
         }
     }
@@ -77,9 +116,9 @@ fun getConfiguredOpenApiPlugin() = OpenApiPlugin(
             }
         }
     }.apply {
-        path("/swagger-docs") // endpoint for OpenAPI json
-        swagger(SwaggerOptions("/swagger-ui")) // endpoint for swagger-ui
-        reDoc(ReDocOptions("/redoc")) // endpoint for redoc
+        path("/swagger-docs")
+        swagger(SwaggerOptions("/swagger-ui"))
+        reDoc(ReDocOptions("/redoc"))
         defaultDocumentation { doc ->
             doc.json("500", ErrorResponse::class.java)
             doc.json("503", ErrorResponse::class.java)
