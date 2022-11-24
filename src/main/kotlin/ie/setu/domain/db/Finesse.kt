@@ -7,5 +7,7 @@ object Finesse  : Table("finesse"){
     val id = integer("id").autoIncrement().primaryKey()
     val dayType = varchar("daytype", 100)
     val started = datetime("started")
+    //grouping
+    //jefit
     val userId = integer("user_id").references(Users.id, onDelete = ReferenceOption.CASCADE)
 }

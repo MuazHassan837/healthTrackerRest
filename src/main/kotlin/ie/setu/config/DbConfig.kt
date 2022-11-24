@@ -1,12 +1,24 @@
 package ie.setu.config
+import okhttp3.internal.concurrent.TaskRunner.Companion.logger
 import org.jetbrains.exposed.sql.Database
 
 class DbConfig{
     fun getDbConnection() :Database{
-        return Database.connect(
-            "jdbc:postgresql://ec2-3-224-8-189.compute-1.amazonaws.com:5432/dciecsop9967be?sslmode=require",
-            driver = "org.postgresql.Driver",
-            user = "tilzrkkjjbgqec",
-            password = "db1728c3933cf730e31ec76a47722b39148e758648388e766d9b0771dae94225")
+        val PGUSER = "fpppevzp"
+        val PGPASSWORD = "UxNHb6s4pMlmFT1b4q8y_l5T6GGVxUk_"
+        val PGHOST = "lucky.db.elephantsql.com"
+        val PGPORT = "5432"
+        val PGDATABASE = "fpppevzp"
+
+        val url = "jdbc:postgresql://$PGHOST:$PGPORT/$PGDATABASE"
+        val dbConfig = Database.connect(url,
+            driver="org.postgresql.Driver",
+            user = PGUSER,
+            password = PGPASSWORD
+        )
+
+        logger.info{"db url - connection: " + dbConfig.url}
+
+        return dbConfig
     }
 }
