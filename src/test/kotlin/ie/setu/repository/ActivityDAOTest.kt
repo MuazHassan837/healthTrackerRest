@@ -24,12 +24,15 @@ class ActivityDAOTest : BasicDAOTest() {
         @Test
         fun `multiple activities added to table can be retrieved successfully`() {
             transaction {
-                populateThreeUserTable()
+                val users = populateThreeUserTable()
                 val activityDAO = populateActivityTable()
                 kotlin.test.assertEquals(3, activityDAO.getAll().size)
                 kotlin.test.assertEquals(activity1, activityDAO.findByActivityId(activity1.id))
                 kotlin.test.assertEquals(activity2, activityDAO.findByActivityId(activity2.id))
                 kotlin.test.assertEquals(activity3, activityDAO.findByActivityId(activity3.id))
+
+                deInitUsers(users)
+                deInitActivityObj(activityDAO)
             }
         }
 
@@ -41,29 +44,38 @@ class ActivityDAOTest : BasicDAOTest() {
         @Test
         fun `getting all activites from a populated table returns all rows`() {
             transaction {
-                populateThreeUserTable()
+                val users = populateThreeUserTable()
                 val activityDAO = populateActivityTable()
                 kotlin.test.assertEquals(3, activityDAO.getAll().size)
+
+                deInitUsers(users)
+                deInitActivityObj(activityDAO)
             }
         }
 
         @Test
         fun `get activity by user id that has no activities, results in no record returned`() {
             transaction {
-                populateThreeUserTable()
+                val users = populateThreeUserTable()
                 val activityDAO = populateActivityTable()
                 kotlin.test.assertEquals(0, activityDAO.findByUserId(3).size)
+
+                deInitUsers(users)
+                deInitActivityObj(activityDAO)
             }
         }
 
         @Test
         fun `get activity by user id that exists, results in a correct activitie(s) returned`() {
             transaction {
-                populateThreeUserTable()
+                val users = populateThreeUserTable()
                 val activityDAO = populateActivityTable()
                 kotlin.test.assertEquals(activity1, activityDAO.findByUserId(validID).get(0))
                 kotlin.test.assertEquals(activity2, activityDAO.findByUserId(validID).get(1))
                 kotlin.test.assertEquals(activity3, activityDAO.findByUserId(validID).get(2))
+
+                deInitUsers(users)
+                deInitActivityObj(activityDAO)
             }
         }
 
@@ -79,19 +91,25 @@ class ActivityDAOTest : BasicDAOTest() {
         @Test
         fun `get activity by activity id that has no records, results in no record returned`() {
             transaction {
-                populateThreeUserTable()
+                val users = populateThreeUserTable()
                 val activityDAO = populateActivityTable()
                 kotlin.test.assertEquals(null, activityDAO.findByActivityId(4))
+
+                deInitUsers(users)
+                deInitActivityObj(activityDAO)
             }
         }
 
         @Test
         fun `get activity by activity id that exists, results in a correct activity returned`() {
             transaction {
-                populateThreeUserTable()
+                val users = populateThreeUserTable()
                 val activityDAO = populateActivityTable()
                 kotlin.test.assertEquals(activity1, activityDAO.findByActivityId(1))
                 kotlin.test.assertEquals(activity3, activityDAO.findByActivityId(3))
+
+                deInitUsers(users)
+                deInitActivityObj(activityDAO)
             }
         }
     }
@@ -102,25 +120,31 @@ class ActivityDAOTest : BasicDAOTest() {
         @Test
         fun `updating existing activity in table results in successful update`() {
             transaction {
-                populateThreeUserTable()
+                val users = populateThreeUserTable()
                 val activityDAO = populateActivityTable()
                 val activity3updated = Activity(id = 3, description = updatedDescription, duration = updatedDuration,
                     calories = updatedCalories, started = DateTime.now(), userId = 2)
                 activityDAO.updateActivityByID(activity3updated.id, activity3updated)
                 kotlin.test.assertEquals(activity3updated, activityDAO.findByActivityId(3))
+
+                deInitUsers(users)
+                deInitActivityObj(activityDAO)
             }
         }
 
         @Test
         fun `updating non-existant activity in table results in no updates`() {
             transaction {
-                populateThreeUserTable()
+                val users = populateThreeUserTable()
                 val activityDAO = populateActivityTable()
                 val activity4updated = Activity(id = 4, description = updatedDescription, duration = updatedDuration,
                     calories = updatedCalories, started = DateTime.now(), userId = 2)
                 activityDAO.updateActivityByID(4, activity4updated)
                 kotlin.test.assertEquals(null, activityDAO.findByActivityId(4))
                 kotlin.test.assertEquals(3, activityDAO.getAll().size)
+
+                deInitUsers(users)
+                deInitActivityObj(activityDAO)
             }
         }
     }
@@ -131,22 +155,28 @@ class ActivityDAOTest : BasicDAOTest() {
         @Test
         fun `deleting a non-existant activity (by id) in table results in no deletion`() {
             transaction {
-                populateThreeUserTable()
+                val users = populateThreeUserTable()
                 val activityDAO = populateActivityTable()
                 kotlin.test.assertEquals(3, activityDAO.getAll().size)
                 activityDAO.deleteActivityByID(4)
                 kotlin.test.assertEquals(3, activityDAO.getAll().size)
+
+                deInitUsers(users)
+                deInitActivityObj(activityDAO)
             }
         }
 
         @Test
         fun `deleting an existing activity (by id) in table results in record being deleted`() {
             transaction {
-                populateThreeUserTable()
+                val users = populateThreeUserTable()
                 val activityDAO = populateActivityTable()
                 kotlin.test.assertEquals(3, activityDAO.getAll().size)
                 activityDAO.deleteActivityByID(activity3.id)
                 kotlin.test.assertEquals(2, activityDAO.getAll().size)
+
+                deInitUsers(users)
+                deInitActivityObj(activityDAO)
             }
         }
 
@@ -154,22 +184,28 @@ class ActivityDAOTest : BasicDAOTest() {
         @Test
         fun `deleting activities when none exist for user id results in no deletion`() {
             transaction {
-                populateThreeUserTable()
+                val users = populateThreeUserTable()
                 val activityDAO = populateActivityTable()
                 kotlin.test.assertEquals(3, activityDAO.getAll().size)
                 activityDAO.deleteActivitiesOfUserID(3)
                 kotlin.test.assertEquals(3, activityDAO.getAll().size)
+
+                deInitUsers(users)
+                deInitActivityObj(activityDAO)
             }
         }
 
         @Test
         fun `deleting activities when 1 or more exist for user id results in deletion`() {
             transaction {
-                populateThreeUserTable()
+                val users = populateThreeUserTable()
                 val activityDAO = populateActivityTable()
                 kotlin.test.assertEquals(3, activityDAO.getAll().size)
                 activityDAO.deleteActivitiesOfUserID(validID)
                 kotlin.test.assertEquals(0, activityDAO.getAll().size)
+
+                deInitUsers(users)
+                deInitActivityObj(activityDAO)
             }
         }
     }

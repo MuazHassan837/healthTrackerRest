@@ -18,6 +18,7 @@ private val user4 = users.get(3)
 class UserDAOTest : BasicDAOTest() {
 
 
+
     @Nested
     inner class createAndTest {
         @Test
@@ -31,6 +32,8 @@ class UserDAOTest : BasicDAOTest() {
                 assertEquals(user1, userDAO.findById(user1.id))
                 assertEquals(user2, userDAO.findById(user2.id))
                 assertEquals(user3, userDAO.findById(user3.id))
+
+                deInitUsers(userDAO)
             }
         }
         @Test
@@ -40,6 +43,8 @@ class UserDAOTest : BasicDAOTest() {
                 SchemaUtils.create(Users)
                 val userDAO = populateThreeUserTable()
                 assertEquals(3, userDAO.getAll().size)
+
+                deInitUsers(userDAO)
             }
         }
 
@@ -62,6 +67,8 @@ class UserDAOTest : BasicDAOTest() {
                 SchemaUtils.create(Users)
                 val userDAO = populateThreeUserTable()
                 assertEquals(null, userDAO.findById(4))
+
+                deInitUsers(userDAO)
             }
         }
         @Test
@@ -70,6 +77,8 @@ class UserDAOTest : BasicDAOTest() {
                 SchemaUtils.create(Users)
                 val userDAO = populateFourUserTable()
                 assertEquals(user4, userDAO.findById(4))
+
+                deInitUsers(userDAO)
             }
         }
 
@@ -86,6 +95,8 @@ class UserDAOTest : BasicDAOTest() {
             transaction {
                 val userDAO = populateThreeUserTable()
                 assertEquals(user2, userDAO.findByEmail(user2.email))
+
+                deInitUsers(userDAO)
             }
         }
     }
@@ -99,6 +110,8 @@ class UserDAOTest : BasicDAOTest() {
                 assertEquals(3, userDAO.getAll().size)
                 userDAO.delete(4)
                 assertEquals(3, userDAO.getAll().size)
+
+                deInitUsers(userDAO)
             }
         }
         @Test
@@ -108,6 +121,8 @@ class UserDAOTest : BasicDAOTest() {
                 assertEquals(3, userDAO.getAll().size)
                 userDAO.delete(user3.id)
                 assertEquals(2, userDAO.getAll().size)
+
+                deInitUsers(userDAO)
             }
         }
     }
@@ -122,6 +137,8 @@ class UserDAOTest : BasicDAOTest() {
                 val user3Updated = User(3, "new username", "new@email.ie")
                 userDAO.update(user3.id, user3Updated)
                 assertEquals(user3Updated, userDAO.findById(3))
+
+                deInitUsers(userDAO)
             }
         }
 
@@ -133,6 +150,8 @@ class UserDAOTest : BasicDAOTest() {
                 userDAO.update(4, user4Updated)
                 assertEquals(null, userDAO.findById(4))
                 assertEquals(3, userDAO.getAll().size)
+
+                deInitUsers(userDAO)
             }
         }
     }

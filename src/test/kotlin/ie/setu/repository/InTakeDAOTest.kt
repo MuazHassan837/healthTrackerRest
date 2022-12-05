@@ -15,6 +15,7 @@ import kotlin.test.assertEquals
 
 private val hydration1 = intakes.get(0)
 private val hydration2  = intakes.get(1)
+private val userImp = users[0]
 
 class InTakeDAOTest : BasicDAOTest() {
 
@@ -25,12 +26,15 @@ class InTakeDAOTest : BasicDAOTest() {
         fun `adding hydration objects into the table successfully`(){
             transaction {
                 SchemaUtils.create(InTakes)
-                favUserTable()
+                val user = favUserTable()
                 var intakeDAO = InTakeDAO()
                 assertEquals(0,intakeDAO.getAll().size)
                 intakeDAO.save(hydration1)
                 intakeDAO.save(hydration2)
                 assertEquals(2,intakeDAO.getAll().size)
+
+                user.delete(userImp.id)
+                deInitInTakeObj(intakeDAO)
             }
         }
 
@@ -38,12 +42,15 @@ class InTakeDAOTest : BasicDAOTest() {
         @Test
         fun `multiple hydration objects added to table and fetched successfully`(){
             transaction {
-                favUserTable()
+                val user = favUserTable()
                 val hydrationDAO = populateInTakeTable()
 
                 assertEquals(2,hydrationDAO.getAll().size)
                 assertEquals(hydration1,hydrationDAO.findByInTakeId(hydration1.id))
                 assertEquals(hydration2,hydrationDAO.findByInTakeId(hydration2.id))
+
+                user.delete(userImp.id)
+                deInitInTakeObj(hydrationDAO)
 
             }
         }
@@ -54,28 +61,37 @@ class InTakeDAOTest : BasicDAOTest() {
         @Test
         fun `getting all hydration objects from populated returns all row`(){
             transaction {
-                favUserTable()
+                val user = favUserTable()
                 val hydrationDAO = populateInTakeTable()
                 assertEquals(2,hydrationDAO.getAll().size)
+
+                user.delete(userImp.id)
+                deInitInTakeObj(hydrationDAO)
             }
         }
 
         @Test
         fun `get intake object by user id that has none, returns no record`(){
             transaction {
-                populateThreeUserTable()
+                val user = populateThreeUserTable()
                 val hydrationDAO = populateInTakeTable()
                 assertEquals(0,hydrationDAO.findByUserID(Int.MIN_VALUE).size)
+
+                deInitUsers(user)
+                deInitInTakeObj(hydrationDAO)
             }
         }
 
         @Test
         fun `get intake object by user id that exists, results in correct record`(){
             transaction {
-                favUserTable()
+                val user = favUserTable()
                 val hydrationDAO = populateInTakeTable()
                 assertEquals(hydration1,hydrationDAO.findByUserID(validID).get(0))
                 assertEquals(hydration2,hydrationDAO.findByUserID(validID).get(1))
+
+                user.delete(userImp.id)
+                deInitInTakeObj(hydrationDAO)
             }
         }
 
@@ -92,19 +108,25 @@ class InTakeDAOTest : BasicDAOTest() {
         @Test
         fun `get intake object by intake id that has no records results in nothing returned`(){
             transaction {
-                favUserTable()
+                val user = favUserTable()
                 val hydrationDAO = populateInTakeTable()
                 assertEquals(null,hydrationDAO.findByInTakeId(Int.MIN_VALUE))
+
+                user.delete(userImp.id)
+                deInitInTakeObj(hydrationDAO)
             }
         }
 
         @Test
         fun `get intake object by intake id that has record, results in hydration details returned`(){
             transaction {
-                favUserTable()
+                val user = favUserTable()
                 val hydrationDAO = populateInTakeTable()
                 assertEquals(hydration1,hydrationDAO.findByInTakeId(1))
                 assertEquals(hydration2,hydrationDAO.findByInTakeId(2))
+
+                user.delete(userImp.id)
+                deInitInTakeObj(hydrationDAO)
             }
         }
 
@@ -115,11 +137,14 @@ class InTakeDAOTest : BasicDAOTest() {
         @Test
         fun `updating existing hydration object results in successful update`(){
             transaction {
-                favUserTable()
+                val user = favUserTable()
                 val hydrationDAO = populateInTakeTable()
                 val newObj = InTake(id = 1, amountltr = 3.2, substance = "Apple Juice", userId = validID)
                 hydrationDAO.updateInTakeById(1,newObj)
                 assertEquals(newObj,hydrationDAO.findByInTakeId(newObj.id))
+
+                user.delete(userImp.id)
+                deInitInTakeObj(hydrationDAO)
             }
         }
 
@@ -127,11 +152,14 @@ class InTakeDAOTest : BasicDAOTest() {
         @Test
         fun `updating invalid hydration object results in no update`(){
             transaction {
-                favUserTable()
+                val user = favUserTable()
                 val hydrationDAO = populateInTakeTable()
                 val newObj = InTake(id = 32, amountltr = 3.2, substance = "Apple Juice", userId = validID)
                 hydrationDAO.updateInTakeById(32,newObj)
                 assertEquals(null,hydrationDAO.findByInTakeId(32))
+
+                user.delete(userImp.id)
+                deInitInTakeObj(hydrationDAO)
             }
         }
     }
@@ -143,44 +171,56 @@ class InTakeDAOTest : BasicDAOTest() {
         @Test
         fun `delete a non existant hydration object results in no deletion`(){
             transaction {
-                favUserTable()
+                val user = favUserTable()
                 val hydrationDAO = populateInTakeTable()
                 assertEquals(2,hydrationDAO.getAll().size)
                 hydrationDAO.deleteInTakeByID(324)
                 assertEquals(2,hydrationDAO.getAll().size)
+
+                user.delete(userImp.id)
+                deInitInTakeObj(hydrationDAO)
             }
         }
 
         @Test
         fun `delete a existant hydration object results in deletion`(){
             transaction {
-                favUserTable()
+                val user = favUserTable()
                 val hydrationDAO = populateInTakeTable()
                 assertEquals(2,hydrationDAO.getAll().size)
                 hydrationDAO.deleteInTakeByID(1)
                 assertEquals(1,hydrationDAO.getAll().size)
+
+                user.delete(userImp.id)
+                deInitInTakeObj(hydrationDAO)
             }
         }
 
         @Test
         fun `delete a non existant users hydration history results in no deletion`(){
             transaction {
-                favUserTable()
+                val user = favUserTable()
                 val hydrationDAO = populateInTakeTable()
                 assertEquals(2,hydrationDAO.getAll().size)
                 hydrationDAO.deleteIntakesOfUserID(400)
                 assertEquals(2,hydrationDAO.getAll().size)
+
+                user.delete(userImp.id)
+                deInitInTakeObj(hydrationDAO)
             }
         }
 
         @Test
         fun `delete a existant users hydration history results in successful deletion`(){
             transaction {
-                favUserTable()
+                val user = favUserTable()
                 val hydrationDAO = populateInTakeTable()
                 assertEquals(2,hydrationDAO.getAll().size)
                 hydrationDAO.deleteIntakesOfUserID(validID)
                 assertEquals(0,hydrationDAO.getAll().size)
+
+                user.delete(userImp.id)
+                deInitInTakeObj(hydrationDAO)
             }
         }
     }

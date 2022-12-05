@@ -61,12 +61,24 @@ internal fun populateUserForMood(): UserDAO{
     return userDAO
 }
 
+internal fun deInitUsers(instance : UserDAO){
+    instance.delete(users[0].id)
+    instance.delete(users[1].id)
+    instance.delete(users[2].id)
+    instance.delete(users[3].id)
+}
+
 internal fun populateMoodTable(): MoodDAO {
     SchemaUtils.create(Moods)
     val moodDAO = MoodDAO()
     moodDAO.save(moodObjs.get(0))
     moodDAO.save(moodObjs.get(1))
     return moodDAO
+}
+
+internal fun deInitMoodTable(comingMoodObj : MoodDAO) {
+    comingMoodObj.delMoodById(moodObjs[0].id)
+    comingMoodObj.delMoodById(moodObjs[1].id)
 }
 
 internal fun favUserTable(): UserDAO {
@@ -91,12 +103,23 @@ internal  fun populateFitnessTable(): FitnessDAO {
     return fitnessDAO
 }
 
+internal fun deInitFitnessTable(comingOBj : FitnessDAO){
+    comingOBj.deleteFitnessByID(fitnessObjs[0].id)
+    comingOBj.deleteFitnessByID(fitnessObjs[1].id)
+}
+
+
 internal  fun populateInTakeTable() : InTakeDAO {
     SchemaUtils.create(InTakes)
     val intakeDAO = InTakeDAO()
     intakeDAO.save(intakes.get(0))
     intakeDAO.save(intakes.get(1))
     return intakeDAO
+}
+
+internal fun deInitInTakeObj(comingObj : InTakeDAO) {
+    comingObj.deleteInTakeByID(intakes[0].id)
+    comingObj.deleteInTakeByID(intakes[1].id)
 }
 internal fun populateThreeUserTable(): UserDAO {
     SchemaUtils.create(Users)
@@ -125,4 +148,11 @@ fun populateActivityTable(): ActivityDAO {
     activityDAO.save(activities[1])
     activityDAO.save(activities[2])
     return activityDAO
+}
+
+internal fun deInitActivityObj(comingObj: ActivityDAO){
+    comingObj.deleteActivityByID(activities[0].id)
+    comingObj.deleteActivityByID(activities[1].id)
+    comingObj.deleteActivityByID(activities[2].id)
+
 }
