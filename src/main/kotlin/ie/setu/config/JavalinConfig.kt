@@ -39,6 +39,8 @@ class JavalinConfig {
 
     private fun registerRoutes(app: Javalin) {
         app.routes {
+            get("/", VueComponent("<home-page></home-page>"))
+
             path("/api/users") {
                 get(UserController::getAllUsers)
                 post(UserController::addUser)
@@ -104,7 +106,6 @@ class JavalinConfig {
                 post(MoodController::addMood)
             }
 
-            get("/", VueComponent("<home-page></home-page>"))
         }
     }
 }
