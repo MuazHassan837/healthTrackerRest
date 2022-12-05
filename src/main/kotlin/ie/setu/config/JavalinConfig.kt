@@ -13,6 +13,7 @@ import io.javalin.plugin.openapi.OpenApiOptions
 import io.javalin.plugin.openapi.OpenApiPlugin
 import io.javalin.plugin.openapi.ui.ReDocOptions
 import io.javalin.plugin.openapi.ui.SwaggerOptions
+import io.javalin.plugin.rendering.vue.VueComponent
 
 class JavalinConfig {
 
@@ -102,6 +103,8 @@ class JavalinConfig {
                 get(MoodController::getAllMoods)
                 post(MoodController::addMood)
             }
+
+            get("/", VueComponent("<home-page></home-page>"))
         }
     }
 }
