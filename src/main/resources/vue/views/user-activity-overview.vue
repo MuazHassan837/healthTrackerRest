@@ -18,10 +18,20 @@ Vue.component("user-activity-overview",{
     activities: [],
   }),
   created() {
+
     const userId = this.$javalin.pathParams["user-id"];
-    axios.get(`/api/users/${userId}/activities`)
-        .then(res => this.activities = res.data)
-        .catch(() => alert("Error while fetching activities"));
+
+    if (userId) {
+      const url = `/api/users/${userId}/activities`
+      axios.get(url)
+          .then(res => this.activities = res.data)
+          .catch(() => alert("Error while fetching activities for user " + userId));
+    } else {
+      axios.get("/api/activities")
+          .then(res => this.activities = res.data)
+          .catch(() => alert("Error while fetching activities"));
+    }
+
   }
 });
 </script>
