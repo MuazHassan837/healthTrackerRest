@@ -40,6 +40,10 @@ class JavalinConfig {
     private fun registerRoutes(app: Javalin) {
         app.routes {
             get("/", VueComponent("<home-page></home-page>"))
+            get("/users", VueComponent("<user-overview></user-overview>"))
+            get("/users/{user-id}", VueComponent("<user-profile></user-profile>"))
+            get("/users/{user-id}/activities", VueComponent("<user-activity-overview></user-activity-overview>"))
+
 
             path("/api/users") {
                 get(UserController::getAllUsers)
@@ -48,6 +52,7 @@ class JavalinConfig {
                     get(UserController::getUserByUserId)
                     delete(UserController::deleteUser)
                     patch(UserController::updateUser)
+
                     path("activities"){
                         get(ActivityController::getActivitiesByUserId)
                         delete(ActivityController::deleteAllActByUserId)
@@ -69,6 +74,7 @@ class JavalinConfig {
                     get(UserController::getUserByEmail)
                 }
             }
+
             path("/api/activities") {
                 path("/{act-id}"){
                     delete(ActivityController::deleteActByID)
@@ -78,6 +84,7 @@ class JavalinConfig {
                 get(ActivityController::getAllActivities)
                 post(ActivityController::addActivity)
             }
+
             path("/api/intakes") {
                 path("/{hydra-id}"){
                     delete(HydrationController::delIntakeByID)
@@ -87,6 +94,7 @@ class JavalinConfig {
                 get(HydrationController::getAllInTakes)
                 post(HydrationController::addInTake)
             }
+
             path("/api/fitness") {
                 path("/{fit-id}"){
                     delete(FitnessController::deleteFitByID)
@@ -96,6 +104,7 @@ class JavalinConfig {
                 get(FitnessController::getAllFitnessDetails)
                 post(FitnessController::addFitness)
             }
+
             path("/api/moods") {
                 path("/{mood-id}"){
                     delete(MoodController::deleteMoodByID)
@@ -116,7 +125,7 @@ fun getConfiguredOpenApiPlugin() = OpenApiPlugin(
             info {
                 title = "Health Tracker App"
                 description = "Health Tracker API"
-                version = "1.0.1"
+                version = "2.0.0"
             }
         }
     }.apply {
