@@ -15,8 +15,16 @@ import io.javalin.plugin.openapi.ui.ReDocOptions
 import io.javalin.plugin.openapi.ui.SwaggerOptions
 import io.javalin.plugin.rendering.vue.VueComponent
 
+
+/**
+ * This class is used to configure the Javalin service
+ */
 class JavalinConfig {
 
+    /**
+     * This method is use to start the javalin service
+     * @return Javalin provides a fluent API Config for configuring the server
+     */
     fun startJavalinService(): Javalin {
         val app = Javalin.create {
             it.registerPlugin(getConfiguredOpenApiPlugin())
