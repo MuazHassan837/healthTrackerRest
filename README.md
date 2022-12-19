@@ -1,2 +1,1 @@
-# healthTrackerRest
-API Testing for Health Tracking App
+Health Tracking App
