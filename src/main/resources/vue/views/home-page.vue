@@ -96,3 +96,5 @@ Vue.component('home-page',
       }
     });
 </script>
+
+<!--<testing>-->
