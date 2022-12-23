@@ -1,7 +1,14 @@
 name: Deploy to Railway
 
-on: [push, pull_request]
-
+on:
+  push:
+    branches:
+      - "postInterim"
+  pull_request:
+    branches:
+      - "postInterim" 
+    paths:
+      - ".github/workflows/mvn-deploy.yml"
 jobs:
 
   package:
