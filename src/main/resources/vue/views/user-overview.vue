@@ -19,6 +19,12 @@
         <form id="addUser">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
+              <span class="input-group-text" id="input-user-id">ID</span>
+            </div>
+            <input type="text" class="form-control" v-model="formData.id" name="id" placeholder="User ID"/>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
               <span class="input-group-text" id="input-user-name">Name</span>
             </div>
             <input type="text" class="form-control" v-model="formData.name" name="name" placeholder="Name"/>
@@ -37,7 +43,7 @@
       <div class="list-group-item d-flex align-items-start"
            v-for="(user,index) in users" v-bind:key="index">
         <div class="mr-auto p-2">
-          <span><a :href="`/users/${user.id}`"> {{ user.name }} ({{ user.email }})</a></span>
+          <span><a> {{ user.name }} ({{ user.email }})</a></span>
         </div>
         <div class="p2">
           <a :href="`/users/${user.id}`">
@@ -51,6 +57,12 @@
           </button>
         </div>
       </div>
+    </div>
+    &nbsp;
+    <div align="center">
+      <button rel="tooltip" class="btn btn-info btn-simple btn-link" @click="refresh()">
+        <i class="fa fa-refresh fa-spin"></i>
+      </button>
     </div>
   </app-layout>
 </template>
@@ -89,6 +101,7 @@ Vue.component("user-overview", {
       const url = `/api/users`;
       axios.post(url,
           {
+            id: this.formData.id,
             name: this.formData.name,
             email: this.formData.email
           })
@@ -99,6 +112,9 @@ Vue.component("user-overview", {
           .catch(error => {
             console.log(error)
           })
+    },
+    refresh: function () {
+      this.fetchUsers();
     }
   }
 });
