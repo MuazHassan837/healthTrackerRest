@@ -23,7 +23,7 @@ fun mapToInTake(it: ResultRow) = InTake (
     amountltr = it[InTakes.amountltr],
     substance = it[InTakes.substance],
     userId = it[InTakes.userId],
-    started = it[Activities.started]
+    started = it[InTakes.started]
     )
 
 fun mapToFitness(it: ResultRow) = Fitness (
@@ -38,4 +38,4 @@ fun mapToMood(it: ResultRow) = Mood (
     id = it[Moods.id],
     mood = it[Moods.mood],
     userId = it[Moods.userId],
-    started = it[Activities.started])
+    started = it[Moods.started])
