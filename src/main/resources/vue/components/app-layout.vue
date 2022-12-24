@@ -42,5 +42,7 @@ Vue.component("app-layout", {template: "#app-layout"});
 <style>
 .navbar{
   background-color: #e3f2fd;
+
 }
 </style>
+<!--checkpointer: 1.1.1-->
