@@ -8,6 +8,7 @@ import ie.setu.helpers.populateMoodTable
 import ie.setu.helpers.populateUserForMood
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.joda.time.DateTime
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -138,7 +139,7 @@ class MoodDAOTest : BasicDAOTest(){
             transaction {
                 val users = populateUserForMood()
                 val moodDAO = populateMoodTable()
-                val newObj = Mood(id = 1, mood = "uncertain", userId = validID)
+                val newObj = Mood(id = 1, mood = "uncertain", userId = validID, DateTime.now())
                 moodDAO.updateMoodById(10,newObj)
                 assertEquals(null,moodDAO.findById(10))
 
@@ -152,7 +153,7 @@ class MoodDAOTest : BasicDAOTest(){
             transaction {
                 val users = populateUserForMood()
                 val moodDAO = populateMoodTable()
-                val newObj = Mood(id = 1, mood = "uncertain", userId = validID)
+                val newObj = Mood(id = 1, mood = "uncertain", userId = validID,DateTime.now())
                 moodDAO.updateMoodById(1,newObj)
                 assertEquals(newObj,moodDAO.findById(newObj.id))
 

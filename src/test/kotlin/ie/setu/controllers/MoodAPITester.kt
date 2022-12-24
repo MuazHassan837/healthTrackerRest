@@ -9,6 +9,7 @@ import junit.framework.TestCase
 import kong.unirest.HttpResponse
 import kong.unirest.JsonNode
 import kong.unirest.Unirest
+import org.joda.time.DateTime
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -19,12 +20,13 @@ private val moodObj1 = moodObjs.get(0)
 class MoodAPITester : UserAPITester() {
 
 
-    private fun addMood(ID : Int, newMood: String, userId: Int): HttpResponse<JsonNode> {
+    private fun addMood(ID : Int, newMood: String, userId: Int, started: DateTime): HttpResponse<JsonNode> {
         return Unirest.post(origin + "/api/moods").body("""
                 {
                   "id": $ID,
                    "mood":"$newMood",
-                   "userId":$userId
+                   "userId":$userId,
+                   "started":"$started"
                 }
             """.trimIndent())
             .asJson()
@@ -46,19 +48,20 @@ class MoodAPITester : UserAPITester() {
         return Unirest.get(origin + "/api/users/${userID}/moods").asJson()
     }
 
-    private fun updateMood(ID : Int, newMood: String, userId: Int): HttpResponse<JsonNode> {
+    private fun updateMood(ID : Int, newMood: String, userId: Int, started: DateTime): HttpResponse<JsonNode> {
         return Unirest.patch(origin + "/api/moods/$ID")
             .body("""
                 {
                    "mood":"$newMood",
-                   "userId":$userId
+                   "userId":$userId,
+                   "started":"$started"
                 }
             """.trimIndent()).asJson()
     }
 
     private fun addOneMoodAndUser(){
         val newUser : User = jsonToObject(addUser(validID, validName, validEmail).body.toString())
-        val response = addMood(ID = moodObj1.id, moodObj1.mood,newUser.id)
+        val response = addMood(ID = moodObj1.id, moodObj1.mood,newUser.id, moodObj1.started)
         TestCase.assertEquals(201, response.status)
     }
     private fun destructorToMoodAndOneUser(){
@@ -72,7 +75,7 @@ class MoodAPITester : UserAPITester() {
         @Test
         fun `add an mood for existing user returns 201 response`(){
             val newUser : User = jsonToObject(addUser(validID, validName, validEmail).body.toString())
-            val response = addMood(ID = moodObj1.id, moodObj1.mood,newUser.id)
+            val response = addMood(ID = moodObj1.id, moodObj1.mood,newUser.id, moodObj1.started)
             TestCase.assertEquals(201, response.status)
 
             TestCase.assertEquals(204, delMoodByUserID(newUser.id).status)
@@ -82,7 +85,7 @@ class MoodAPITester : UserAPITester() {
 
         @Test
         fun `add an mood update for non existing user returns 404 response`(){
-            val response = addMood(ID = moodObj1.id, moodObj1.mood, Int.MIN_VALUE)
+            val response = addMood(ID = moodObj1.id, moodObj1.mood, Int.MIN_VALUE, moodObj1.started)
             TestCase.assertEquals(404, response.status)
         }
 
@@ -145,7 +148,7 @@ class MoodAPITester : UserAPITester() {
             @Test
             fun `delete mood of valid user id returns 204`(){
                 val newUser : User = jsonToObject(addUser(validID, validName, validEmail).body.toString())
-                val response = addMood(ID = moodObj1.id, moodObj1.mood,newUser.id)
+                val response = addMood(ID = moodObj1.id, moodObj1.mood,newUser.id, moodObj1.started)
                 TestCase.assertEquals(201, response.status)
 
                 TestCase.assertEquals(201, response.status)
@@ -163,7 +166,7 @@ class MoodAPITester : UserAPITester() {
             @Test
             fun` delete mood by id for valid mood id returns 204`(){
                 val newUser : User = jsonToObject(addUser(validID, validName, validEmail).body.toString())
-                val response = addMood(ID = moodObj1.id, moodObj1.mood,newUser.id)
+                val response = addMood(ID = moodObj1.id, moodObj1.mood,newUser.id, moodObj1.started)
                 TestCase.assertEquals(201, response.status)
 
                 val returnResponse = jsonNodeToObject<Mood>(response)
@@ -183,12 +186,12 @@ class MoodAPITester : UserAPITester() {
             @Test
             fun `update valid mood by id return 204`(){
                 val newUser : User = jsonToObject(addUser(validID, validName, validEmail).body.toString())
-                val response = addMood(ID = moodObj1.id, moodObj1.mood,newUser.id)
+                val response = addMood(ID = moodObj1.id, moodObj1.mood,newUser.id, moodObj1.started)
                 TestCase.assertEquals(201, response.status)
 
                 TestCase.assertEquals(
                     204,
-                    updateMood(ID = moodObj1.id, newMood = updateMood, userId = newUser.id).status
+                    updateMood(ID = moodObj1.id, newMood = updateMood, userId = newUser.id,updatedStarted).status
                 )
 
                 TestCase.assertEquals(204, delMoodByUserID(newUser.id).status)
@@ -197,7 +200,7 @@ class MoodAPITester : UserAPITester() {
 
             @Test
             fun `update mood by valid id returns 404`(){
-                TestCase.assertEquals(404, updateMood(ID = InValidNo, newMood = "Much Wow", userId = InValidNo).status)
+                TestCase.assertEquals(404, updateMood(ID = InValidNo, newMood = "Much Wow", userId = InValidNo,updatedStarted).status)
             }
         }
     }

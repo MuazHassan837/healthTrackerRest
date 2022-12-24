@@ -25,6 +25,7 @@ class MoodDAO {
                 it[id] = ComingObj.id
                 it[mood] = ComingObj.mood
                 it[userId] = ComingObj.userId
+                it[started] = ComingObj.started
             }
         }
     }
@@ -35,6 +36,7 @@ class MoodDAO {
                 it[id] = comingObj.id
                 it[mood] = comingObj.mood
                 it[userId] = comingObj.userId
+                it[started] = comingObj.started
             }
         }
     }

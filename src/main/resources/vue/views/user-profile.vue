@@ -46,6 +46,7 @@
           </div>
         </form>
       </div>
+
       <!--       starting point for activity feed-->
       <div class="card-footer text-left">
         <p v-if="activities.length == 0"> No activities yet...</p>
@@ -119,7 +120,7 @@
           </div>
         </div>
       </div>
-      <!--       can be used to update/edit the activity-->
+        <!--       can be used to update/edit the activity-->
       <div class="card-body" :class="{ 'd-none': hideForm1}">
         <form id="editActivity">
           <div class="input-group mb-3">
@@ -802,3 +803,9 @@ Vue.component("user-profile", {
   }
 });
 </script>
+
+<style>
+#sectionGap{
+  padding-top: 100px;
+}
+</style>

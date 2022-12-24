@@ -33,6 +33,7 @@ class InTakeDAO {
                 it[amountltr] = intake.amountltr
                 it[substance] = intake.substance
                 it[userId] = intake.userId
+                it[started] = intake.started
             }
         }
     }
@@ -59,6 +60,7 @@ class InTakeDAO {
                 it[amountltr] = newObj.amountltr
                 it[substance] = newObj.substance
                 it[userId]  = newObj.userId
+                it[started] = newObj.started
             }
         }
     }

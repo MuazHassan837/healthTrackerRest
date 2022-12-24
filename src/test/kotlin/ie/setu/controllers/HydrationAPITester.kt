@@ -9,6 +9,7 @@ import junit.framework.TestCase
 import kong.unirest.HttpResponse
 import kong.unirest.JsonNode
 import kong.unirest.Unirest
+import org.joda.time.DateTime
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -16,13 +17,14 @@ import org.junit.jupiter.api.TestInstance
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class HydrationAPITester :UserAPITester() {
 
-    private fun addInTake(ID : Int, amount: Double, content: String, userId: Int): HttpResponse<JsonNode> {
+    private fun addInTake(ID : Int, amount: Double, content: String, userId: Int, started: DateTime): HttpResponse<JsonNode> {
         return Unirest.post(origin + "/api/intakes").body("""
                 {
                   "id": $ID,
                    "amountltr":$amount,
                    "substance":"$content",
-                   "userId":$userId
+                   "userId":$userId,
+                   "started":"$started"
                 }
             """.trimIndent())
             .asJson()
@@ -47,13 +49,14 @@ class HydrationAPITester :UserAPITester() {
         return Unirest.get(origin + "/api/users/${userID}/intakes").asJson()
     }
 
-    private fun updateIntake(ID : Int, amount: Double, content: String, userId: Int): HttpResponse<JsonNode> {
+    private fun updateIntake(ID : Int, amount: Double, content: String, userId: Int, started: DateTime): HttpResponse<JsonNode> {
         return Unirest.patch(origin + "/api/intakes/$ID")
             .body("""
                 {
                    "amountltr":$amount,
                    "substance":"$content",
-                   "userId":$userId
+                   "userId":$userId,
+                   "started":"$started",
                 }
             """.trimIndent()).asJson()
     }
@@ -62,7 +65,7 @@ class HydrationAPITester :UserAPITester() {
         val newUser : User = jsonToObject(addUser(validID, validName, validEmail).body.toString())
         val response = addInTake(
             intakes[0].id, intakes[0].amountltr,
-            intakes[0].substance, newUser.id)
+            intakes[0].substance, newUser.id, intakes[0].started)
         TestCase.assertEquals(201, response.status)
     }
     private fun destructor(){
@@ -79,7 +82,7 @@ class HydrationAPITester :UserAPITester() {
             val newUser : User = jsonToObject(addUser(validID, validName, validEmail).body.toString())
             val response = addInTake(
                 intakes[0].id, intakes[0].amountltr,
-                intakes[0].substance, newUser.id)
+                intakes[0].substance, newUser.id, intakes[0].started)
             TestCase.assertEquals(201, response.status)
 
             TestCase.assertEquals(204, delIntakeByUserID(newUser.id).status)
@@ -91,7 +94,7 @@ class HydrationAPITester :UserAPITester() {
         fun `add an hydration update for non existing user returns 404 response`(){
             val response = addInTake(
                 intakes[0].id, intakes[0].amountltr,
-                intakes[0].substance, Int.MIN_VALUE)
+                intakes[0].substance, Int.MIN_VALUE, intakes[0].started)
             TestCase.assertEquals(404, response.status)
         }
 
@@ -105,11 +108,11 @@ class HydrationAPITester :UserAPITester() {
             val newUser : User = jsonToObject(addUser(validID, validName, validEmail).body.toString())
             val response1 = addInTake(
                 intakes[0].id, intakes[0].amountltr,
-                intakes[0].substance, newUser.id)
+                intakes[0].substance, newUser.id, intakes[0].started)
             TestCase.assertEquals(201, response1.status)
             val response2 = addInTake(
                 intakes[1].id, intakes[1].amountltr,
-                intakes[1].substance, newUser.id)
+                intakes[1].substance, newUser.id, intakes[1].started)
             TestCase.assertEquals(201, response2.status)
             TestCase.assertEquals(200, getAllInTakes().status)
 
@@ -164,7 +167,7 @@ class HydrationAPITester :UserAPITester() {
             val newUser : User = jsonToObject(addUser(validID, validName, validEmail).body.toString())
             val response1 = addInTake(
                 intakes[0].id, intakes[0].amountltr,
-                intakes[0].substance, newUser.id)
+                intakes[0].substance, newUser.id, intakes[0].started)
             TestCase.assertEquals(201, response1.status)
             TestCase.assertEquals(204, delIntakeByUserID(newUser.id).status)
             TestCase.assertEquals(204, deleteUser(newUser.id).status)
@@ -181,7 +184,7 @@ class HydrationAPITester :UserAPITester() {
             val newUser : User = jsonToObject(addUser(validID, validName, validEmail).body.toString())
             val response1 = addInTake(
                 intakes[0].id, intakes[0].amountltr,
-                intakes[0].substance, newUser.id)
+                intakes[0].substance, newUser.id, intakes[0].started)
             TestCase.assertEquals(201, response1.status)
             val returnResponse = jsonNodeToObject<InTake>(response1)
             TestCase.assertEquals(204, delIntakeByID(returnResponse.id).status)
@@ -206,13 +209,13 @@ class HydrationAPITester :UserAPITester() {
             val newUser : User = jsonToObject(addUser(validID, validName, validEmail).body.toString())
             val response1 = addInTake(
                 intakes[0].id, intakes[0].amountltr,
-                intakes[0].substance, newUser.id)
+                intakes[0].substance, newUser.id, intakes[0].started)
             TestCase.assertEquals(201, response1.status)
 
             val returnResponse = jsonNodeToObject<InTake>(response1)
             TestCase.assertEquals(
                 204,
-                updateIntake(returnResponse.id, updatedAmount, updatedSubstance, returnResponse.userId).status
+                updateIntake(returnResponse.id, updatedAmount, updatedSubstance, returnResponse.userId,updatedStarted).status
             )
 
             val fetchedIntake =  getInTakeByID(returnResponse.id)
@@ -224,8 +227,8 @@ class HydrationAPITester :UserAPITester() {
         }
 
         @Test
-        fun `update intake by valid id returns 404`(){
-            TestCase.assertEquals(404, updateIntake(InValidNo, updatedAmount, updatedSubstance, InValidNo).status)
+        fun `update intake by invalid id returns 404`(){
+            TestCase.assertEquals(404, updateIntake(InValidNo, updatedAmount, updatedSubstance, InValidNo,updatedStarted).status)
         }
 
     }

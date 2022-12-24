@@ -38,8 +38,8 @@ val activities = arrayListOf<Activity>(
     Activity(id = 3, description = "Walking", duration = 12.0, calories = 120, started = DateTime.now(), userId = 201)
 )
 val intakes = arrayListOf<InTake>(
-    InTake(id = 1, amountltr = 1.5, substance = "water", userId = 201),
-    InTake(id = 2, amountltr = 0.5, substance = "milk", userId = 201)
+    InTake(id = 1, amountltr = 1.5, substance = "water", userId = 201, started = DateTime.now()),
+    InTake(id = 2, amountltr = 0.5, substance = "milk", userId = 201, started = DateTime.now())
     )
 
 
@@ -49,8 +49,8 @@ val fitnessObjs = arrayListOf<Fitness>(
 )
 
 val moodObjs = arrayListOf<Mood>(
-    Mood(id = 1, mood = "Happy", userId = 201),
-    Mood(id = 2, mood = "Sad", userId = 2)
+    Mood(id = 1, mood = "Happy", userId = 201, started = DateTime.now()),
+    Mood(id = 2, mood = "Sad", userId = 2, started = DateTime.now())
     )
 
 internal fun populateUserForMood(): UserDAO{

@@ -119,3 +119,4 @@ Vue.component("user-overview", {
   }
 });
 </script>
+

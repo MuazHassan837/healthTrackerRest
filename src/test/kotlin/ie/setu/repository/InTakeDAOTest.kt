@@ -9,6 +9,7 @@ import ie.setu.helpers.populateInTakeTable
 import ie.setu.helpers.populateThreeUserTable
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.joda.time.DateTime
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -139,7 +140,7 @@ class InTakeDAOTest : BasicDAOTest() {
             transaction {
                 val user = favUserTable()
                 val hydrationDAO = populateInTakeTable()
-                val newObj = InTake(id = 1, amountltr = 3.2, substance = "Apple Juice", userId = validID)
+                val newObj = InTake(id = 1, amountltr = 3.2, substance = "Apple Juice", userId = validID, DateTime.now())
                 hydrationDAO.updateInTakeById(1,newObj)
                 assertEquals(newObj,hydrationDAO.findByInTakeId(newObj.id))
 
@@ -154,7 +155,7 @@ class InTakeDAOTest : BasicDAOTest() {
             transaction {
                 val user = favUserTable()
                 val hydrationDAO = populateInTakeTable()
-                val newObj = InTake(id = 32, amountltr = 3.2, substance = "Apple Juice", userId = validID)
+                val newObj = InTake(id = 32, amountltr = 3.2, substance = "Apple Juice", userId = validID, DateTime.now())
                 hydrationDAO.updateInTakeById(32,newObj)
                 assertEquals(null,hydrationDAO.findByInTakeId(32))
 
