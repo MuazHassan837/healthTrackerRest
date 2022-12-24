@@ -99,13 +99,14 @@ class HealthTrackerControllerTest {
             """.trimIndent()).asJson()
     }
 
-    private fun addInTake(ID : Int, amount: Double, content: String, userId: Int): HttpResponse<JsonNode>{
+    private fun addInTake(ID : Int, amount: Double, content: String, userId: Int, started: DateTime): HttpResponse<JsonNode> {
         return Unirest.post(origin + "/api/intakes").body("""
                 {
                   "id": $ID,
                    "amountltr":$amount,
                    "substance":"$content",
-                   "userId":$userId
+                   "userId":$userId,
+                   "started":"$started"
                 }
             """.trimIndent())
             .asJson()
@@ -130,13 +131,14 @@ class HealthTrackerControllerTest {
         return Unirest.get(origin + "/api/users/${userID}/intakes").asJson()
     }
 
-    private fun updateIntake(ID : Int, amount: Double, content: String, userId: Int): HttpResponse<JsonNode> {
+    private fun updateIntake(ID : Int, amount: Double, content: String, userId: Int, started: DateTime): HttpResponse<JsonNode> {
         return Unirest.patch(origin + "/api/intakes/$ID")
             .body("""
                 {
                    "amountltr":$amount,
                    "substance":"$content",
-                   "userId":$userId
+                   "userId":$userId,
+                   "started":"$started"
                 }
             """.trimIndent()).asJson()
     }
@@ -232,7 +234,7 @@ class HealthTrackerControllerTest {
             assertEquals(validName, retrievedUser.name)
 
             //After - restore the db to previous state by deleting the added user
-            val deleteResponse = deleteUser(retrievedUser.id)
+            val deleteResponse = deleteUser(validID)
             assertEquals(204, deleteResponse.status)
         }
     }
@@ -483,7 +485,7 @@ class HealthTrackerControllerTest {
         fun `add an hydration update for existing user returns 201 response`(){
             val newUser : User = jsonToObject(addUser(validID,validName, validEmail).body.toString())
             val response = addInTake(intakes[0].id, intakes[0].amountltr,
-                                                            intakes[0].substance, newUser.id)
+                                                            intakes[0].substance, newUser.id, intakes[0].started)
             assertEquals(201,response.status)
 
             assertEquals(204,delIntakeByUserID(newUser.id).status)
@@ -494,7 +496,7 @@ class HealthTrackerControllerTest {
         @Test
         fun `add an hydration update for non existing user returns 404 response`(){
             val response = addInTake(intakes[0].id, intakes[0].amountltr,
-                intakes[0].substance, Int.MIN_VALUE)
+                intakes[0].substance, Int.MIN_VALUE, intakes[0].started)
             assertEquals(404,response.status)
         }
 
@@ -507,10 +509,10 @@ class HealthTrackerControllerTest {
         fun `read existing hydration list returns 200`(){
             val newUser : User = jsonToObject(addUser(validID,validName, validEmail).body.toString())
             val response1 = addInTake(intakes[0].id, intakes[0].amountltr,
-                intakes[0].substance, newUser.id)
+                intakes[0].substance, newUser.id, intakes[0].started)
             assertEquals(201,response1.status)
             val response2 = addInTake(intakes[1].id, intakes[1].amountltr,
-                intakes[1].substance, newUser.id)
+                intakes[1].substance, newUser.id, intakes[1].started)
             assertEquals(201,response2.status)
             assertEquals(200,getAllInTakes().status)
 
@@ -533,7 +535,7 @@ class HealthTrackerControllerTest {
         fun `read intake for user id when it and intake exists returns 200`(){
             val newUser : User = jsonToObject(addUser(validID,validName, validEmail).body.toString())
             val response1 = addInTake(intakes[0].id, intakes[0].amountltr,
-                intakes[0].substance, newUser.id)
+                intakes[0].substance, newUser.id, intakes[0].started)
             assertEquals(201,response1.status)
             assertEquals(200,getInTakeForUserID(newUser.id).status)
 
@@ -552,7 +554,7 @@ class HealthTrackerControllerTest {
         fun `read intake with id when it exists returns 200`(){
             val newUser : User = jsonToObject(addUser(validID,validName, validEmail).body.toString())
             val response1 = addInTake(intakes[0].id, intakes[0].amountltr,
-                intakes[0].substance, newUser.id)
+                intakes[0].substance, newUser.id, intakes[0].started)
             assertEquals(201,response1.status)
             assertEquals(200,getInTakeByID(intakes[0].id).status)
 
@@ -574,7 +576,7 @@ class HealthTrackerControllerTest {
         fun `delete intakes of valid user id returns 204`(){
             val newUser : User = jsonToObject(addUser(validID,validName, validEmail).body.toString())
             val response1 = addInTake(intakes[0].id, intakes[0].amountltr,
-                intakes[0].substance, newUser.id)
+                intakes[0].substance, newUser.id, intakes[0].started)
             assertEquals(201,response1.status)
             assertEquals(204,delIntakeByUserID(newUser.id).status)
             assertEquals(204,deleteUser(newUser.id).status)
@@ -590,7 +592,7 @@ class HealthTrackerControllerTest {
         fun` delete intake by id for valid intake id returns 204`(){
             val newUser : User = jsonToObject(addUser(validID,validName, validEmail).body.toString())
             val response1 = addInTake(intakes[0].id, intakes[0].amountltr,
-                intakes[0].substance, newUser.id)
+                intakes[0].substance, newUser.id, intakes[0].started)
             assertEquals(201,response1.status)
             val returnResponse = jsonNodeToObject<InTake>(response1)
             assertEquals(204,delIntakeByID(returnResponse.id).status)
@@ -614,10 +616,10 @@ class HealthTrackerControllerTest {
         fun `update valid Intake by id return 204`(){
             val newUser : User = jsonToObject(addUser(validID,validName, validEmail).body.toString())
             val response1 = addInTake(intakes[0].id, intakes[0].amountltr,
-                intakes[0].substance, newUser.id)
+                intakes[0].substance, newUser.id, intakes[0].started)
             assertEquals(201,response1.status)
             val returnResponse = jsonNodeToObject<InTake>(response1)
-            assertEquals(204,updateIntake(returnResponse.id, updatedAmount, updatedSubstance,returnResponse.userId).status)
+            assertEquals(204,updateIntake(returnResponse.id, updatedAmount, updatedSubstance,returnResponse.userId,DateTime.now()).status)
 
             val fetchedIntake =  getInTakeByID(returnResponse.id)
             val convertedFetchedIntake = jsonNodeToObject<InTake>(fetchedIntake)
@@ -630,7 +632,7 @@ class HealthTrackerControllerTest {
         @Test
         fun `update intake by valid id returns 404`(){
             val InValidNo = Int.MIN_VALUE
-            assertEquals(404, updateIntake(InValidNo, updatedAmount, updatedSubstance,InValidNo).status)
+            assertEquals(404, updateIntake(InValidNo, updatedAmount, updatedSubstance,InValidNo,DateTime.now()).status)
         }
 
 

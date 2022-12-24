@@ -56,7 +56,7 @@ class HydrationAPITester :UserAPITester() {
                    "amountltr":$amount,
                    "substance":"$content",
                    "userId":$userId,
-                   "started":"$started",
+                   "started":"$started"
                 }
             """.trimIndent()).asJson()
     }
