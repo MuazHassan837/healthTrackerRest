@@ -304,7 +304,7 @@
         <div class="list-group-item d-flex align-items-start"
              v-for="(inTake,index) in inTakeData" v-bind:key="index">
           <div class="mr-auto p-2">
-            <span><a> took {{ inTake.amountltr }} liter of {{ inTake.substance }}</a></span>
+            <span><a> took {{ inTake.amountltr }} liter of {{ inTake.substance }} on {{inTake.started.substring(0, 10)}}</a></span>
           </div>
           <div class="p2">
             <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link"
@@ -400,7 +400,7 @@
         <div class="list-group-item d-flex align-items-start"
              v-for="(mood,index) in moodData" v-bind:key="index">
           <div class="mr-auto p-2">
-            <span><a> is feeling {{ mood.mood }}</a></span>
+            <span><a> is feeling {{ mood.mood }} on {{mood.started.substring(0, 10)}}</a></span>
           </div>
           <div class="p2">
             <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link"
@@ -658,7 +658,8 @@ Vue.component("user-profile", {
             id: this.inTakeFormData.id,
             amountltr: this.inTakeFormData.amountltr,
             substance: this.inTakeFormData.substance,
-            userId: this.inTakeFormData.userId
+            userId: this.inTakeFormData.userId,
+            started: new Date().toISOString()
           })
           .then(response => {
             this.inTakeData.push(response.data)
@@ -674,7 +675,8 @@ Vue.component("user-profile", {
           {
             id: this.moodFormData.id,
             mood: this.moodFormData.mood,
-            userId: this.moodFormData.userId
+            userId: this.moodFormData.userId,
+            started: new Date().toISOString()
           })
           .then(response => {
             this.moodData.push(response.data)
@@ -708,7 +710,7 @@ Vue.component("user-profile", {
             id: this.currFitness.id,
             dayType: this.currFitness.dayType,
             started: new Date().toISOString(),
-            userId: this.currFitness.userId
+            userId: this.currFitness.userId,
           })
           .then(_ =>
               this.refresh()
@@ -724,7 +726,8 @@ Vue.component("user-profile", {
             id: this.currInTake.id,
             amountltr: this.currInTake.amountltr,
             substance: this.currInTake.substance,
-            userId: this.currInTake.userId
+            userId: this.currInTake.userId,
+            started: new Date().toISOString()
           })
           .then(_ =>
               this.refresh()
@@ -739,7 +742,8 @@ Vue.component("user-profile", {
           {
             id: this.currMood.id,
             mood: this.currMood.mood,
-            userId: this.currMood.userId
+            userId: this.currMood.userId,
+            started: new Date().toISOString()
           })
           .then(_ =>
               this.refresh()
