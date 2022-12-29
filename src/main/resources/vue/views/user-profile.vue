@@ -6,7 +6,7 @@
     </div>
     <!--     displays the user profile buttons-->
     <div class="card bg-light mb-3" v-if="!noUserFound">
-      <div class="card-header">
+      <div class="card-header" id="configColor">
         <div class="row">
           <div class="col-6"> User Profile</div>
           <div class="col" align="right">
@@ -24,7 +24,7 @@
         </div>
       </div>
       <!--       displays the user profile and change can be done on it-->
-      <div class="card-body">
+      <div class="card-body" id="configColor">
         <form>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -46,20 +46,20 @@
           </div>
         </form>
       </div>
+    </div>
 
-      <!--       starting point for activity feed-->
-      <div class="card-footer text-left">
-        <p v-if="activities.length == 0"> No activities yet...</p>
-        <p v-if="activities.length > 0"> Activities so far...</p>
-        <div class="col" align="right">
-          <button rel="tooltip" title="Add"
-                  class="btn btn-info btn-simple btn-link"
-                  @click="hideForm =!hideForm">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </button>
-        </div>
+    <!--       starting point for activity feed-->
+    <div class="card-footer text-left" id="configColor">
+      <p v-if="activities.length == 0"> No activities yet...</p>
+      <p v-if="activities.length > 0"> Activities so far...</p>
+      <div class="col" align="right">
+        <button rel="tooltip" title="Add"
+                class="btn btn-info btn-simple btn-link"
+                @click="hideForm =!hideForm">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
       </div>
-      <!--       append to activity via this card-->
+
       <div class="card-body" :class="{ 'd-none': hideForm}">
         <form id="addActivity">
           <div class="input-group mb-3">
@@ -103,10 +103,10 @@
       </div>
       <!--       displays the activity and actions on it-->
       <div class="list-group list-group-flush">
-        <div class="list-group-item d-flex align-items-start"
+        <div class="list-group-item d-flex align-items-start" id="configColor"
              v-for="(activity,index) in activities" v-bind:key="index">
           <div class="mr-auto p-2">
-            <span><a> {{ activity.description }} for {{ activity.duration }} minutes</a></span>
+            <span><a> {{activity.description}} for {{activity.duration}} minutes</a></span>
           </div>
           <div class="p2">
             <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link"
@@ -120,7 +120,7 @@
           </div>
         </div>
       </div>
-        <!--       can be used to update/edit the activity-->
+      <!--       can be used to update/edit the activity-->
       <div class="card-body" :class="{ 'd-none': hideForm1}">
         <form id="editActivity">
           <div class="input-group mb-3">
@@ -164,9 +164,10 @@
         </button>
       </div>
     </div>
+    &nbsp;
 
     <!--fitness app-->
-    <div class="card-footer text-left">
+    <div class="card-footer text-left" id="configColor">
       <p v-if="fitnessData.length == 0"> No fitness stuff yet...</p>
       <p v-if="fitnessData.length > 0"> Fitness so far...</p>
       <div class="col" align="right">
@@ -177,7 +178,7 @@
         </button>
       </div>
       <!-- add to the fitness form -->
-      <div class="card-body" :class="{ 'd-none': fitnessForm}">
+      <div class="card-body" :class="{ 'd-none': fitnessForm}" id="configColor">
         <form id="addFitness">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -206,10 +207,10 @@
       </div>
       <!--     displays the fitness and actions on it-->
       <div class="list-group list-group-flush">
-        <div class="list-group-item d-flex align-items-start"
+        <div class="list-group-item d-flex align-items-start" id="configColor"
              v-for="(fitness,index) in fitnessData" v-bind:key="index">
           <div class="mr-auto p-2">
-            <span><a> {{ fitness.dayType }} on {{ fitness.started.substring(0, 10) }}</a></span>
+            <span><a> {{fitness.dayType}} on {{fitness.started.substring(0, 10)}}</a></span>
           </div>
           <div class="p2">
             <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link"
@@ -253,9 +254,9 @@
         </div>
       </div>
     </div>
-&nbsp;
+    &nbsp;
     <!--    intake app-->
-    <div class="card-footer text-left">
+    <div class="card-footer text-left" id="configColor">
       <p v-if="inTakeData.length == 0"> Be hydrated...</p>
       <p v-if="inTakeData.length > 0"> Hydrated so far...</p>
       <div class="col" align="right">
@@ -301,10 +302,10 @@
       </div>
       <!--     displays the intake and actions on it-->
       <div class="list-group list-group-flush">
-        <div class="list-group-item d-flex align-items-start"
+        <div class="list-group-item d-flex align-items-start" id="configColor"
              v-for="(inTake,index) in inTakeData" v-bind:key="index">
           <div class="mr-auto p-2">
-            <span><a> took {{ inTake.amountltr }} liter of {{ inTake.substance }} on {{inTake.started.substring(0, 10)}}</a></span>
+            <span><a> took {{inTake.amountltr}} liter of {{inTake.substance}} on {{inTake.started.substring(0, 10)}}</a></span>
           </div>
           <div class="p2">
             <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link"
@@ -356,9 +357,8 @@
       </div>
     </div>
     &nbsp;
-
     <!--    mood app-->
-    <div class="card-footer text-left">
+    <div class="card-footer text-left" id="configColor">
       <p v-if="moodData.length == 0"> Be happy...</p>
       <p v-if="moodData.length > 0"> Mood swings so far...</p>
       <div class="col" align="right">
@@ -396,11 +396,11 @@
         </button>
       </div>
       <!--     displays the mood and actions on it-->
-      <div class="list-group list-group-flush">
-        <div class="list-group-item d-flex align-items-start"
+      <div class="list-group list-group-flush" >
+        <div class="list-group-item d-flex align-items-start" id="configColor"
              v-for="(mood,index) in moodData" v-bind:key="index">
           <div class="mr-auto p-2">
-            <span><a> is feeling {{ mood.mood }} on {{mood.started.substring(0, 10)}}</a></span>
+            <span><a> is feeling {{mood.mood}} on {{mood.started.substring(0, 10)}}</a></span>
           </div>
           <div class="p2">
             <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link"
@@ -444,13 +444,13 @@
         </div>
       </div>
     </div>
-      <!--     refresh button to refresh the page-->
-      &nbsp;
-      <div align="center">
-        <button rel="tooltip" class="btn btn-info btn-simple btn-link" @click="refresh()">
-          <i class="fa fa-refresh fa-spin"></i>
-        </button>
-      </div>
+    <!--     refresh button to refresh the page-->
+    &nbsp;
+    <div align="center">
+      <button rel="tooltip" class="btn btn-info btn-simple btn-link" @click="refresh()">
+        <i class="fa fa-refresh fa-spin"></i>
+      </button>
+    </div>
 
   </app-layout>
 </template>
@@ -809,7 +809,7 @@ Vue.component("user-profile", {
 </script>
 
 <style>
-#sectionGap{
-  padding-top: 100px;
+#configColor {
+  background-color: #F8F4EA;
 }
 </style>

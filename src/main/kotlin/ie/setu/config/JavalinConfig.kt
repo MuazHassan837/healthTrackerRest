@@ -50,8 +50,8 @@ class JavalinConfig {
             get("/", VueComponent("<home-page></home-page>"))
             get("/users", VueComponent("<user-overview></user-overview>"))
             get("/users/{user-id}", VueComponent("<user-profile></user-profile>"))
-            get("/activities", VueComponent("<user-activity-overview></user-activity-overview>"))
-            get("/users/{user-id}/activities", VueComponent("<user-activity-overview></user-activity-overview>"))
+            get("/users/{user-id}/fitness", VueComponent("<jet-fit-page></jet-fit-page>"))
+            get("/jetfit", VueComponent("<user-fitness-page></user-fitness-page>"))
 
 
             path("/api/users") {

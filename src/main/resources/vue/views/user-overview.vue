@@ -1,7 +1,7 @@
 <template id="user-overview">
   <app-layout>
     <div class="card bg-light mb-3">
-      <div class="card-header">
+      <div class="card-header" id="configColor">
         <div class="row">
           <div class="col-6">
             Users
@@ -15,7 +15,7 @@
           </div>
         </div>
       </div>
-      <div class="card-body" :class="{ 'd-none': hideForm}">
+      <div class="card-body" :class="{ 'd-none': hideForm}" id="configColor">
         <form id="addUser">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -41,7 +41,7 @@
     </div>
     <div class="list-group list-group-flush">
       <div class="list-group-item d-flex align-items-start"
-           v-for="(user,index) in users" v-bind:key="index">
+           v-for="(user,index) in users" v-bind:key="index" id="configColor">
         <div class="mr-auto p-2">
           <span><a> {{ user.name }} ({{ user.email }})</a></span>
         </div>
@@ -67,6 +67,7 @@
   </app-layout>
 </template>
 <script>
+
 Vue.component("user-overview", {
   template: "#user-overview",
   data: () => ({
@@ -120,3 +121,10 @@ Vue.component("user-overview", {
 });
 </script>
 
+
+
+<style>
+#configColor {
+  background-color: #F8F4EA;
+}
+</style>

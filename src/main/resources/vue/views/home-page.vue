@@ -1,21 +1,20 @@
 <!-- the "home-page" element is passed as a parameter to VueComponent in the JavalinConfig file -->
 <template id="home-page">
   <app-layout>
-    <div class="row">
+    <div class="row" id="configGap">
       <div class="col">
-        <div class="card">
+        <div class="card" id="configColor">
           <h5 class="card-header">Registered Users</h5>
           <div class="card-body">
             <h5 class="card-title">{{users.length}} users</h5>
-            <a href="/users" class="btn btn-primary">More Details...</a>
+            <a href="/users" class="btn btn-primary" id="configButton">More Details...</a>
           </div>
         </div>
       </div>
     </div>
-    &nbsp;
-    <div class="row">
+    <div class="row" id="configGap">
       <div class="col">
-        <div class="card">
+        <div class="card" id="configColor">
           <h5 class="card-header">Total Activities</h5>
           <div class="card-body">
             <h5 class="card-title">{{activities.length}} activities</h5>
@@ -23,7 +22,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="card">
+        <div class="card" id="configColor">
           <h5 class="card-header">Fitness Tasks</h5>
           <div class="card-body">
             <h5 class="card-title">{{fitness.length}} task</h5>
@@ -31,10 +30,9 @@
         </div>
       </div>
     </div>
-    &nbsp;
-    <div class="row">
+    <div class="row" id="configGap">
       <div class="col">
-        <div class="card">
+        <div class="card" id="configColor">
           <h5 class="card-header">Hydration Status</h5>
           <div class="card-body">
             <h5 class="card-title">{{intakes.length}} statuses</h5>
@@ -42,7 +40,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="card">
+        <div class="card" id="configColor">
           <h5 class="card-header">Mood Status</h5>
           <div class="card-body">
             <h5 class="card-title">{{moods.length}} statuses</h5>
@@ -59,7 +57,6 @@
   </app-layout>
 
 </template>
-
 
 <script>
 Vue.component('home-page',
@@ -96,3 +93,18 @@ Vue.component('home-page',
       }
     });
 </script>
+
+<style>
+
+#configColor {
+  background-color: #F8F4EA;
+}
+#configButton {
+  background-color: #E1D7C6;
+  color: black;
+  border-color: white;
+}
+#configGap {
+  padding: 10px;
+}
+</style>

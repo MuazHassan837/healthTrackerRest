@@ -59,7 +59,7 @@ class FitnessAPITester :UserAPITester() {
     private fun addUserAndFitness(){
         val newUser : User = jsonToObject(addUser(validID, validName, validEmail).body.toString())
         val response = addFitness(id = fitnessObjs[0].id, fitnessObjs[0].dayType,
-            started = fitnessObjs[0].started, userId = newUser.id)
+            started = fitnessObjs[0].started, userId = validID)
         TestCase.assertEquals(201, response.status)
     }
     private fun destructor(){
@@ -110,7 +110,7 @@ class FitnessAPITester :UserAPITester() {
 
         @Test
         fun `read non-existing fitness list return 404`(){
-            TestCase.assertEquals(getAllFitnessInfo().status, 404)
+            TestCase.assertEquals(404,getAllFitnessInfo().status)
         }
 
         @Test
