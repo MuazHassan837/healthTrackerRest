@@ -1,4 +1,3 @@
-<!-- the "home-page" element is passed as a parameter to VueComponent in the JavalinConfig file -->
 <template id="home-page">
   <app-layout>
     <div class="row" id="configGap">
@@ -54,6 +53,7 @@
         <i class="fa fa-refresh fa-spin"></i>
       </button>
     </div>
+
   </app-layout>
 
 </template>
@@ -76,7 +76,7 @@ Vue.component('home-page',
         refresh: function () {
           axios.get("/api/users")
               .then(res => this.users = res.data)
-              .catch(() => alert("Error while fetching users"));
+              .catch(() => swal("Opsss!", "Error while fetching users", "error"));
           axios.get("/api/activities")
               .then(res => this.activities = res.data)
               .catch(() => console.log("Error while fetching activities"));
@@ -95,7 +95,6 @@ Vue.component('home-page',
 </script>
 
 <style>
-
 #configColor {
   background-color: #F8F4EA;
 }

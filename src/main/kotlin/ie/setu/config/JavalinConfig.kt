@@ -54,6 +54,7 @@ class JavalinConfig {
             get("/jetfit", VueComponent("<user-fitness-page></user-fitness-page>"))
 
 
+
             path("/api/users") {
                 get(UserController::getAllUsers)
                 post(UserController::addUser)

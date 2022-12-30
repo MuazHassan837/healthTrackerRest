@@ -25,11 +25,11 @@ Vue.component("user-activity-overview",{
       const url = `/api/users/${userId}/activities`
       axios.get(url)
           .then(res => this.activities = res.data)
-          .catch(() => alert("Error while fetching activities for user " + userId));
+          .catch(() => swal("Opsss!", "Error fetching activities for user"+ userId, "error"));
     } else {
       axios.get("/api/activities")
           .then(res => this.activities = res.data)
-          .catch(() => alert("Error while fetching activities"));
+          .catch(() => swal("Opsss!", "Error fetching activities", "error"));
     }
 
   }

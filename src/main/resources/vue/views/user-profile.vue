@@ -210,7 +210,7 @@
         <div class="list-group-item d-flex align-items-start" id="configColor"
              v-for="(fitness,index) in fitnessData" v-bind:key="index">
           <div class="mr-auto p-2">
-            <span><a> {{fitness.dayType}} on {{fitness.started.substring(0, 10)}}</a></span>
+            <span><a> {{fitness.dayType}} on {{fitness.started.substring(0, 10)}} at {{fitness.started.substring(11, 16)}}</a></span>
           </div>
           <div class="p2">
             <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link"
@@ -526,7 +526,7 @@ Vue.component("user-profile", {
           .catch(error => {
             console.log(error)
           })
-      alert("User updated!")
+      swal("Success", "Updated!", "success")
     },
     deleteUser: function () {
       if (confirm("Do you really want to delete?")) {
@@ -534,7 +534,7 @@ Vue.component("user-profile", {
         const url = `/api/users/${userId}`
         axios.delete(url)
             .then(response => {
-              alert("User deleted")
+              swal("Success", "Deleted!", "success")
               //display the /users endpoint
               window.location.href = '/users';
             })

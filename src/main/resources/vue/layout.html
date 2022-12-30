@@ -1,21 +1,18 @@
 <html>
 <head>
-  <title>HealthTracker</title>
+  <title>Fit Pro</title>
   <meta charset="utf8">
 
   <script src="/webjars/axios/0.19.2/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
   <script src="https://kit.fontawesome.com/5431bb362d.js" crossorigin="anonymous"></script>
 
-  <!-- Javalin’s Vue plugin will scan your /resources/vue folder and put -->
-  <!-- all your Vue components into componentRegistration -->
+
   @componentRegistration
 
-  <!-- bootstrap css-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 
-  <!-- bootstrap - jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -24,8 +21,6 @@
 
 <body>
 <main id="main-vue">
-  <!-- Javalin will let you choose one component to mount -->
-  <!-- based on the current URL, this is the routeComponent -->
   @routeComponent
 </main>
 <script>

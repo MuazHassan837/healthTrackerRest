@@ -82,7 +82,8 @@ Vue.component("user-overview", {
     fetchUsers: function () {
       axios.get("/api/users")
           .then(res => this.users = res.data)
-          .catch(() => alert("Error while fetching users"));
+          .catch(() => swal("Opsss!", "Error while fetching users", "error"));
+
     },
     deleteUser: function (user, index) {
       if (confirm('Are you sure you want to delete this user? This action cannot be undone.', 'Warning')) {
