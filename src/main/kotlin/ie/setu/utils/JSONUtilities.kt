@@ -11,6 +11,9 @@ import kong.unirest.HttpResponse
 import kong.unirest.JsonNode
 
 
+/**
+ * This class is used to define the JSON utilities(Mapping to Object)
+ */
 inline fun <reified T: Any> jsonToObject(json: String) : T
         = jacksonObjectMapper()
     .registerModule(JodaModule())

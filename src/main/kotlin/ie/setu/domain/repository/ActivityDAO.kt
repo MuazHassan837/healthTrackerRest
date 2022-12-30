@@ -6,6 +6,9 @@ import ie.setu.utils.mapToActivity
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
+/**
+ * This class is used to define the repository actions for the activities
+ */
 class ActivityDAO {
 
     fun getAll(): ArrayList<Activity> {

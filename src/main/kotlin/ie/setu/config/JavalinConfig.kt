@@ -38,6 +38,11 @@ class JavalinConfig {
         registerRoutes(app)
         return app
     }
+
+    /**
+     * This method is used to assign the port
+     */
+
     private fun getRemoteAssignedPort(): Int {
         val herokuPort = System.getenv("PORT")
         return if (herokuPort != null) {
@@ -45,6 +50,9 @@ class JavalinConfig {
         } else 7000
     }
 
+    /**
+     * This method is used to register the routes
+     */
     private fun registerRoutes(app: Javalin) {
         app.routes {
             get("/", VueComponent("<home-page></home-page>"))
@@ -129,6 +137,9 @@ class JavalinConfig {
     }
 }
 
+/**
+ * This method is used to configure the OpenApiPlugin
+ */
 fun getConfiguredOpenApiPlugin() = OpenApiPlugin(
     OpenApiOptions {
         openapiDsl {

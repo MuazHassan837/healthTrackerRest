@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
+/**
+ * This class is used to define the user API tests
+ */
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 open class UserAPITester {

@@ -3,7 +3,9 @@ package ie.setu.domain.db
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 
-
+/**
+ * This class is used to define the table for the activities
+ */
 object Activities : Table("activities") {
     val id = integer("id").autoIncrement().primaryKey()
     val description = varchar("description", 100)

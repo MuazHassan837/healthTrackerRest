@@ -7,6 +7,9 @@ import ie.setu.utils.jsonToObject
 import io.javalin.http.Context
 import io.javalin.plugin.openapi.annotations.*
 
+/**
+ * This class is used to handle the requests for the mood
+ */
 object MoodController {
 
     private val userDao = UserDAO()

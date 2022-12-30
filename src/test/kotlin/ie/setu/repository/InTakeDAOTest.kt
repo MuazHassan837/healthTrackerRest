@@ -18,6 +18,9 @@ private val hydration1 = intakes.get(0)
 private val hydration2  = intakes.get(1)
 private val userImp = users[0]
 
+/**
+ * This class is used to define the hydration unit tests
+ */
 class InTakeDAOTest : BasicDAOTest() {
 
     @Nested

@@ -16,6 +16,9 @@ import org.junit.jupiter.api.TestInstance
 
 private val moodObj1 = moodObjs.get(0)
 
+/**
+ * This class is used to define the mood API tests
+ */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MoodAPITester : UserAPITester() {
 

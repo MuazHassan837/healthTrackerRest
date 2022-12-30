@@ -15,6 +15,9 @@ private val user2 = users.get(1)
 private val user3 = users.get(2)
 private val user4 = users.get(3)
 
+/**
+ * This class is used to define the user unit tests
+ */
 class UserDAOTest : BasicDAOTest() {
 
 

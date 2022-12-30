@@ -15,6 +15,9 @@ private val activity1 = activities.get(0)
 private val activity2 = activities.get(1)
 private val activity3 = activities.get(2)
 
+/**
+ * This class is used to define the activity unit tests
+ */
 class ActivityDAOTest : BasicDAOTest() {
 
 

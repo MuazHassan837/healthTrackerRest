@@ -6,6 +6,9 @@ import ie.setu.utils.mapToInTake
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
+/**
+ * This class is used to define the repository actions for the hydration
+ */
 class InTakeDAO {
 
     fun getAll() : ArrayList<InTake> {

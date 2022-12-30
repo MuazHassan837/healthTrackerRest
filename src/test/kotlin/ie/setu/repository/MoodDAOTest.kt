@@ -17,6 +17,9 @@ import kotlin.test.assertEquals
 private val moodObj1 = moodObjs.get(0)
 private val moodObj2 = moodObjs.get(1)
 
+/**
+ * This class is used to define the mood unit tests
+ */
 class MoodDAOTest : BasicDAOTest(){
 
 

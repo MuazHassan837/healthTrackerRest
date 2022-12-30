@@ -16,6 +16,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 
+/**
+ * This class is used to define the integrated activity API tests
+ */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ActivityAPITester : UserAPITester() {
 

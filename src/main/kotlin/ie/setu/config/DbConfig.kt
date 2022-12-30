@@ -2,6 +2,11 @@ package ie.setu.config
 import okhttp3.internal.concurrent.TaskRunner.Companion.logger
 import org.jetbrains.exposed.sql.Database
 
+
+/**
+ * This class is used to connect to the database
+ */
+
 class DbConfig{
     fun getDbConnection() :Database{
         val PGUSER = "fpppevzp"

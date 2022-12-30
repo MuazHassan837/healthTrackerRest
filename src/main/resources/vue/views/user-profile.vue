@@ -305,7 +305,7 @@
         <div class="list-group-item d-flex align-items-start" id="configColor"
              v-for="(inTake,index) in inTakeData" v-bind:key="index">
           <div class="mr-auto p-2">
-            <span><a> took {{inTake.amountltr}} liter of {{inTake.substance}} on {{inTake.started.substring(0, 10)}}</a></span>
+            <span><a> took {{inTake.amountltr}} liter of {{inTake.substance}} on {{inTake.started.substring(0, 10)}} at {{inTake.started.substring(11, 16)}}</a></span>
           </div>
           <div class="p2">
             <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link"
@@ -400,7 +400,7 @@
         <div class="list-group-item d-flex align-items-start" id="configColor"
              v-for="(mood,index) in moodData" v-bind:key="index">
           <div class="mr-auto p-2">
-            <span><a> is feeling {{mood.mood}} on {{mood.started.substring(0, 10)}}</a></span>
+            <span><a> User: {{mood.id}} was feeling {{mood.mood}} on {{mood.started.substring(0, 10)}} at {{mood.started.substring(11, 16)}}</a></span>
           </div>
           <div class="p2">
             <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link"

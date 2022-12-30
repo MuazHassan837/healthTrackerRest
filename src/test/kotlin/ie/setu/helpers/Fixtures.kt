@@ -6,6 +6,9 @@ import ie.setu.domain.repository.*
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.joda.time.DateTime
 
+/**
+ * This class is hold common functions/variables for the tests
+ */
 val nonExistingEmail = "112233445566778testUser@xxxxx.xx"
 val validID = 201
 val validName = "Test User 1"

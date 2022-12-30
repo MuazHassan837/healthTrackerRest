@@ -5,6 +5,9 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import ie.setu.utils.mapToUser
 import org.jetbrains.exposed.sql.*
 
+/**
+ * This class is used to define the repository actions for the users
+ */
 class UserDAO {
 
     fun getAll(): ArrayList<User> {

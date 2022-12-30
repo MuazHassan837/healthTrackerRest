@@ -18,7 +18,9 @@ private val fitnessObj1 = fitnessObjs.get(0)
 private val fitnessObj2 = fitnessObjs.get(1)
 
 
-
+/**
+ * This class is used to define the fitness unit tests
+ */
 class FitnessDAOTest : BasicDAOTest() {
 
 

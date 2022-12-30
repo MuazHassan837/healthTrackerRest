@@ -3,6 +3,9 @@ import ie.setu.domain.*
 import ie.setu.domain.db.*
 import org.jetbrains.exposed.sql.ResultRow
 
+/**
+ * This class is used to define the utilities(mapping) for the model
+ */
 fun mapToUser(it: ResultRow) = User(
     id = it[Users.id],
     name = it[Users.name],
