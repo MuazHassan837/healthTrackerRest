@@ -53,7 +53,6 @@
         <i class="fa fa-refresh fa-spin"></i>
       </button>
     </div>
-
   </app-layout>
 
 </template>

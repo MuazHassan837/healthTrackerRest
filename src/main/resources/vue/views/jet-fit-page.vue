@@ -7,6 +7,7 @@
     </div>
     <div class="row">
       <div class="col" >
+        <img src="https://user-images.githubusercontent.com/113602921/210082278-46572de1-07b3-4de5-bda6-4bff0630f13e.png" class="img-fluid" alt="Responsive image" width="100%">
         <h3 class="card-header" id="configTitleColor">Triceps</h3>
         <div class="card-block" id="configBackColor">
           <p class="card-text" id="triType">
@@ -33,6 +34,7 @@
         </div>
       </div>
       <div class="col">
+        <img src="https://user-images.githubusercontent.com/113602921/210082425-88f0eab8-a78c-414e-9b4b-c0cdf4494672.png" class="img-fluid" alt="Responsive image" width="100%">
         <h3 class="card-header" id="configTitleColor">Chest</h3>
         <div class="card-block" id="configBackColor">
           <p class="card-text" id="chestType">
@@ -62,6 +64,7 @@
 
     <div class="row" id="configGap">
       <div class="col" >
+        <img src="https://user-images.githubusercontent.com/113602921/210083097-153e7b1e-fd90-4f0d-ae3e-60c78c3dfa51.png" class="img-fluid" alt="Responsive image" width="100%">
         <h3 class="card-header" id="configTitleColor">Shoulder</h3>
         <div class="card-block" id="configBackColor">
           <p class="card-text" id="shoulderType">
@@ -88,6 +91,7 @@
         </div>
       </div>
       <div class="col">
+        <img src="https://user-images.githubusercontent.com/113602921/210083239-553f7d48-557a-42d9-be13-b93ed063221d.png" class="img-fluid" alt="Responsive image" width="100%">
         <h3 class="card-header" id="configTitleColor">Biceps</h3>
         <div class="card-block" id="configBackColor">
           <p class="card-text" id="biType">
@@ -118,6 +122,7 @@
 
     <div class="row" id="configGap">
       <div class="col" >
+        <img src="https://user-images.githubusercontent.com/113602921/210083308-c4189d59-ec3f-40f0-8e94-10a2a6f51029.png" class="img-fluid" alt="Responsive image" width="100%">
         <h3 class="card-header" id="configTitleColor">Core</h3>
         <div class="card-block" id="configBackColor">
           <p class="card-text" id="coreType">
@@ -144,6 +149,7 @@
         </div>
       </div>
       <div class="col">
+        <img src="https://user-images.githubusercontent.com/113602921/210083493-383d2bb8-1848-4555-9bd5-c6d94e3cab9a.png" class="img-fluid" alt="Responsive image" width="100%">
         <h3 class="card-header" id="configTitleColor">Back</h3>
         <div class="card-block" id="configBackColor">
           <p class="card-text" id="backType">
@@ -174,6 +180,7 @@
 
     <div class="row" id="configGap">
       <div class="col" >
+        <img src="https://user-images.githubusercontent.com/113602921/210083643-2f03f4bc-df10-4ecf-8a8c-c6eb91ddd6a7.png" class="img-fluid" alt="Responsive image" width="100%">
         <h3 class="card-header" id="configTitleColor">Forearms</h3>
         <div class="card-block" id="configBackColor">
           <p class="card-text" id="forearmType">
@@ -200,6 +207,7 @@
         </div>
       </div>
       <div class="col">
+        <img src="https://user-images.githubusercontent.com/113602921/210083729-7bcd90fd-8792-44e8-a377-71ccf7b5c2fd.png" class="img-fluid" alt="Responsive image" width="100%">
         <h3 class="card-header" id="configTitleColor">Calves</h3>
         <div class="card-block" id="configBackColor">
           <p class="card-text" id="calType">
