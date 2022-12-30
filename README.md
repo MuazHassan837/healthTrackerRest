@@ -1,3 +1,3 @@
-Health & Fitness Tracking App
+Fitness Tracking App
 Features:
 ---
