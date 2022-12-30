@@ -76,7 +76,7 @@ class FitnessAPITester :UserAPITester() {
         fun `add an fitness update for existing user returns 201 response`(){
             val newUser : User = jsonToObject(addUser(validID, validName, validEmail).body.toString())
             val response = addFitness(id = fitnessObjs[0].id, fitnessObjs[0].dayType,
-                started = fitnessObjs[0].started, userId = newUser.id)
+                started = fitnessObjs[0].started, userId = validID)
             TestCase.assertEquals(201, response.status)
 
             TestCase.assertEquals(204, delFitnessByUserID(newUser.id).status)
@@ -98,7 +98,7 @@ class FitnessAPITester :UserAPITester() {
         fun `read existing fitness list returns 200`(){
             val newUser : User = jsonToObject(addUser(validID, validName, validEmail).body.toString())
             val response = addFitness(id = fitnessObjs[0].id, fitnessObjs[0].dayType,
-                started = fitnessObjs[0].started, userId = newUser.id)
+                started = fitnessObjs[0].started, userId = validID)
             TestCase.assertEquals(201, response.status)
 
             val response1 = addFitness(id = fitnessObjs[1].id, fitnessObjs[1].dayType,

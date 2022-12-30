@@ -55,6 +55,8 @@ class JavalinConfig {
      */
     private fun registerRoutes(app: Javalin) {
         app.routes {
+            // add open api documentation for "/" endpoint
+//
             get("/", VueComponent("<home-page></home-page>"))
             get("/users", VueComponent("<user-overview></user-overview>"))
             get("/users/{user-id}", VueComponent("<user-profile></user-profile>"))

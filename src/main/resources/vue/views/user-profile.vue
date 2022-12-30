@@ -50,6 +50,7 @@
 
     <!--       starting point for activity feed-->
     <div class="card-footer text-left" id="configColor">
+      <p> Your activity analysis: {{activityAnalysis}}</p>
       <p v-if="activities.length == 0"> No activities yet...</p>
       <p v-if="activities.length > 0"> Activities so far...</p>
       <div class="col" align="right">
@@ -168,6 +169,7 @@
 
     <!--fitness app-->
     <div class="card-footer text-left" id="configColor">
+      <p> Your fitness Analysis : {{fitnessAnalysis}}</p>
       <p v-if="fitnessData.length == 0"> No fitness stuff yet...</p>
       <p v-if="fitnessData.length > 0"> Fitness so far...</p>
       <div class="col" align="right">
@@ -257,6 +259,7 @@
     &nbsp;
     <!--    intake app-->
     <div class="card-footer text-left" id="configColor">
+      <p>Your Intake Analysis: {{intakeAnalysis}}</p>
       <p v-if="inTakeData.length == 0"> Be hydrated...</p>
       <p v-if="inTakeData.length > 0"> Hydrated so far...</p>
       <div class="col" align="right">
@@ -305,7 +308,7 @@
         <div class="list-group-item d-flex align-items-start" id="configColor"
              v-for="(inTake,index) in inTakeData" v-bind:key="index">
           <div class="mr-auto p-2">
-            <span><a> took {{inTake.amountltr}} liter of {{inTake.substance}} on {{inTake.started.substring(0, 10)}} at {{inTake.started.substring(11, 16)}}</a></span>
+            <span><a> Took {{inTake.amountltr}} liter of {{inTake.substance}} on {{inTake.started.substring(0, 10)}} at {{inTake.started.substring(11, 16)}}</a></span>
           </div>
           <div class="p2">
             <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link"
@@ -359,6 +362,7 @@
     &nbsp;
     <!--    mood app-->
     <div class="card-footer text-left" id="configColor">
+      <p> Your Mood Analysis: {{moodAnalysis}}</p>
       <p v-if="moodData.length == 0"> Be happy...</p>
       <p v-if="moodData.length > 0"> Mood swings so far...</p>
       <div class="col" align="right">
@@ -379,10 +383,13 @@
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="input-mood-mood">Current Mood</span>
+              <label class="input-group-text" for="inputGroupSelect01">Current Mood</label>
             </div>
-            <input type="text" class="form-control" v-model="moodFormData.mood" name="mood"
-                   placeholder="How are ya feeling"/>
+              <select class="custom-select" id="inputGroupSelect01" v-model="moodFormData.mood" name="mood">
+                 <option value="Happy">Happy</option>
+                <option value="Sad">Sad</option>
+                <option value="Uncertain">Uncertain</option>
+            </select>
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -400,7 +407,7 @@
         <div class="list-group-item d-flex align-items-start" id="configColor"
              v-for="(mood,index) in moodData" v-bind:key="index">
           <div class="mr-auto p-2">
-            <span><a> User: {{mood.id}} was feeling {{mood.mood}} on {{mood.started.substring(0, 10)}} at {{mood.started.substring(11, 16)}}</a></span>
+            <span><a> User: {{mood.userId}} was feeling {{mood.mood}} on {{mood.started.substring(0, 10)}} at {{mood.started.substring(11, 16)}}</a></span>
           </div>
           <div class="p2">
             <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link"
@@ -425,10 +432,13 @@
             </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="input-mood-mood">Current Mood</span>
+                <label class="input-group-text" for="inputGroupSelect01">Current Mood</label>
               </div>
-              <input type="text" class="form-control" v-model="currMood.mood" name="mood"
-                     placeholder="How are ya feeling"/>
+              <select class="custom-select" id="inputGroupSelect01" v-model="currMood.mood" name="mood">
+                <option value="Happy">Happy</option>
+                <option value="Sad">Sad</option>
+                <option value="Uncertain">Uncertain</option>
+              </select>
             </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -481,6 +491,12 @@ Vue.component("user-profile", {
     currMood: [],
     hideForm: true,
     hideForm1: true,
+
+
+    activityAnalysis: "Nothing Yet",
+    fitnessAnalysis: "Nothing Yet",
+    intakeAnalysis: "Nothing Yet",
+    moodAnalysis: "Nothing Yet",
   }),
   created: function () {
     const userId = this.$javalin.pathParams["user-id"];
@@ -492,27 +508,97 @@ Vue.component("user-profile", {
           this.noUserFound = true
         })
     axios.get(url + `/activities`)
-        .then(res => this.activities = res.data)
+        .then(res => {this.activities = res.data
+        this.computeActivity(this.activities)
+        })
         .catch(error => {
           console.log("No activities added yet (this is ok): " + error)
         })
     axios.get(url + `/fitness`)
-        .then(res => this.fitnessData = res.data)
+        .then(res => {
+          this.fitnessData = res.data
+          this.computeFitness(this.fitnessData)
+        })
         .catch(error => {
           console.log("No fitness added yet (this is ok): " + error)
         })
     axios.get(url + `/intakes`)
-        .then(res => this.inTakeData = res.data)
+        .then(res =>
+            {this.inTakeData = res.data
+              this.computeHydration(this.inTakeData)
+            })
         .catch(error => {
           console.log("No intake added yet (this is ok): " + error)
         })
     axios.get(url + `/moods`)
-        .then(res => this.moodData = res.data)
+        .then(res => {
+          this.moodData = res.data
+          this.computeMood(this.moodData)
+        })
         .catch(error => {
           console.log("No mood added yet (this is ok): " + error)
         })
   },
   methods: {
+    computeMood : function (comingMoodData) {
+      let uniqueMoods = new Set();
+      for (indMood in comingMoodData) {
+        uniqueMoods.add(comingMoodData[indMood].mood)
+      }
+      if (uniqueMoods.size == 1) {
+        if (uniqueMoods.has("Happy")) {
+          this.moodAnalysis = "You are feeling happy most of the time. That's amazing."
+        } else if (uniqueMoods.has("Sad")) {
+          this.moodAnalysis = "You are feeling sad most of the time. Cheer up..."
+        } else if (uniqueMoods.has("Uncertain")) {
+          this.moodAnalysis = "You are feeling uncertain most of the time. Try to be positive!"
+        }
+      } else {
+        this.moodAnalysis = "You are feeling different moods. Try to be positive!"
+      }
+
+    },
+    computeHydration : function (comingInTakeData) {
+      let totalIntake = 0;
+      let favDrink = new Set();
+      for (indIntake in comingInTakeData) {
+        totalIntake += comingInTakeData[indIntake].amountltr
+        favDrink.add(comingInTakeData[indIntake].substance)
+      }
+
+      if (totalIntake < 1.9) {
+        this.intakeAnalysis = "You are not hydrated enough. Try to drink more Water i.e."
+      } else {
+        if (favDrink.size == 1){
+          this.intakeAnalysis = "You are well hydrated. Keep it up, your favorite drink is " + favDrink.values().next().value
+        }else {
+          this.intakeAnalysis = "You are well hydrated. Keep it up"
+        }
+      }
+    },
+    computeFitness : function (comingFitnessData) {
+      if (comingFitnessData.length <= 2) {
+          this.fitnessAnalysis = "You are not active enough. Time to hit the gym."
+      } else {
+          this.fitnessAnalysis = "You are active, well done. Keep rocking!"
+      }
+    },
+    computeActivity : function (comingActivityData) {
+      var calories = 0;
+      var activity = new Set();
+      for (indActivityData in comingActivityData) {
+        calories += comingActivityData[indActivityData].calories
+        activity.add(comingActivityData[indActivityData].description)
+      }
+      if (calories >= 2000 && calories <= 2500){
+        this.activityAnalysis = "You are going healthy. Keep it up!"
+
+      }else if (calories > 2500){
+        this.activityAnalysis = "You are doing" + activity.values().next().value + " too much. Try to balance with the diet"
+      }else {
+        this.activityAnalysis = "You are not active enough. Try to " + activity.values().next().value + " for more duration"
+      }
+    },
     updateUser: function () {
       const userId = this.$javalin.pathParams["user-id"];
       const url = `/api/users/${userId}`

@@ -3,7 +3,7 @@
     <p class="h3">Exercises</p>
 
     <div class="alert alert-warning" role="alert">
-      <strong>Exercises</strong> Better check yourself, you're not looking too good.
+      <strong>Exercises</strong> Select and record the exercises.
     </div>
     <div class="row">
       <div class="col" >
